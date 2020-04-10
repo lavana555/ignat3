@@ -1,0 +1,23 @@
+.register{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width:200px;
+    margin: 0 auto;
+    margin-top: 400px;
+
+
+}
+
+.btn{
+    border: 1px solid black;
+    background-color:black;
+    color: antiquewhite;
+    margin-top: 10px;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+.btn:hover{
+    transform: scale(1.1);
+    opacity: 0.6;
+}
