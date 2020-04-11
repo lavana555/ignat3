@@ -3,14 +3,9 @@ import ShopTable, {ITableModel} from "./ShopTable";
 import {connect} from "react-redux";
 import {withRouter, RouteComponentProps} from "react-router";
 import {AppStateType} from "../store";
-import {ProductType} from "./bll/shopTableReducer";
+import {getProducts, ProductType} from "./bll/shopTableReducer";
 import ProductOptions from './ProductOptions/ProductOptions';
 
-type MapStateType = {
-    products: Array<ProductType>
-}
-type MapDispatchType = {}
-type PropsType = MapDispatchType & MapStateType & RouteComponentProps
 let arr1: Array<ITableModel> = [
     {
         title: () => <div style={{width: "60%",display:"flex",alignItems:"center", textAlign: "start"}}>Product</div>,
@@ -45,7 +40,19 @@ let arr1: Array<ITableModel> = [
     }
 ]
 
+
+type MapStateType = {
+    products: Array<ProductType>
+}
+type MapDispatchType = {
+    getProducts:()=>void
+}
+type PropsType = MapDispatchType & MapStateType & RouteComponentProps
+
 class ShopTableContainer extends Component<PropsType> {
+    componentDidMount(): void {
+       this.props.getProducts();
+    }
 
     render() {
         return (
@@ -63,4 +70,4 @@ const mstp = (state: AppStateType): MapStateType =>
 
 
 let WithRouterShopTableContainer = withRouter(ShopTableContainer);
-export default connect(mstp, {})(WithRouterShopTableContainer)
+export default connect(mstp, {getProducts})(WithRouterShopTableContainer)

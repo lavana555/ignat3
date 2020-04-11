@@ -8,11 +8,11 @@ import {
     successAC
 } from "../../booleanReducer/booleanReducer";
 
-const PASSWORD_RECOVERY = "app/shopTableReducer/PASSWORD_RECOVERY"
-const ERROR_ALERT = "app/shopTableReducer/ERROR_ALERT"
-const DELETE_ERROR = "app/shopTableReducer/DELETE_ERROR"
-const LOADING_STATUS = "app/shopTableReducer/LOADING_STATUS"
-const DISABLE_STATUS = "app/shopTableReducer/DISABLE_STATUS"
+const PASSWORD_RECOVERY = "app/recPassReducer/PASSWORD_RECOVERY"
+const ERROR_ALERT = "app/recPassReducer/ERROR_ALERT"
+const DELETE_ERROR = "app/recPassReducer/DELETE_ERROR"
+const LOADING_STATUS = "app/recPassReducer/LOADING_STATUS"
+const DISABLE_STATUS = "app/recPassReducer/DISABLE_STATUS"
 
 const initialState = {
     // success: false,

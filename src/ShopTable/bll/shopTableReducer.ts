@@ -1,4 +1,7 @@
 import {Dispatch} from "redux";
+import {apiShopTable} from "../dal/apiShopTable";
+
+const GET_PRODUCTS  = 'app/shopTableReducer/GET_PRODUCTS';
 
 export type ProductType = {
     product: string
@@ -16,11 +19,18 @@ type InitialStateType = typeof initialState
 
 export const shopTableReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
-
+        case  GET_PRODUCTS:
+            return {...state,
+            products: action.products}
         default:
             return state
     }
 }
 //type recPassActionType =
 // RecoveryPassSuccessActionType
-// | ErrorAlertActionType
+
+const getProductsSuccess = (products:any)=>({type:GET_PRODUCTS,products});
+export const getProducts = ()=>async (dispatch:Dispatch)=>{
+   let products =  apiShopTable.getProducts();
+   dispatch(getProductsSuccess(products))
+};
