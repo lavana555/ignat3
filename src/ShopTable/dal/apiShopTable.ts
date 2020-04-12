@@ -27,8 +27,12 @@ type AddProductResponseType = {
     addedProduct:ProductType
     success: boolean
 }
-type DeleteProductResponseType = {
+type DeletedProductResponseType = {
     addedProduct:ProductType
+    success: boolean
+}
+type UpdatedProductResponseType = {
+    updatedProduct:ProductType
     success: boolean
 }
 
@@ -44,6 +48,9 @@ export const apiShopTable = {
             }}).then((res) => res.data.addedProduct)
     },
     delProduct(id: string) {
-        return instance.delete<DeleteProductResponseType>(`?id=${id}`).then((res) => res.data)
+        return instance.delete<DeletedProductResponseType>(`?id=${id}`).then((res) => res.data)
+    },
+    updateProduct(productName:string,price:number,id: string) {
+        return instance.put<UpdatedProductResponseType>(``,{product:{productName:productName,price:price,id:id}}).then((res) => res.data)
     }
 }
