@@ -12,7 +12,7 @@ export type ProductType = {
     created: string
     updated: string
     __v: number
-    id: string
+    id?: string
 }
 type GetProductsResponseType = {
     products:Array<ProductType>
@@ -23,8 +23,20 @@ type GetProductsResponseType = {
     maxPrice:number
 }
 
+type AddProductsResponseType = {
+    addedProduct:ProductType
+    success: boolean
+}
+
 export const apiShopTable = {
     getProducts() {
         return instance.get<GetProductsResponseType>(``).then((res) => res.data.products)
+    },
+    addProduct(productName: string, price: number, productType: string) {
+        return instance.post<AddProductsResponseType>(``,{product: {
+                productName: productName,
+                price: price,
+                productType: productType,
+            }}).then((res) => res.data.addedProduct)
     }
 }

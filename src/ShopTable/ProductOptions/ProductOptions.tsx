@@ -1,6 +1,7 @@
 import React from 'react';
 
 function ProductOptions() {
+
     return (
         <div style={{width:"15%",textAlign:"start"}}>
             <button>add to basket</button>
