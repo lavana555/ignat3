@@ -3,7 +3,7 @@ import ShopTable, {ITableModel} from "./ShopTable";
 import {connect} from "react-redux";
 import {withRouter, RouteComponentProps} from "react-router";
 import {AppStateType} from "../store";
-import {addProduct, getProducts} from "./bll/shopTableReducer";
+import {addProduct, delProduct, getProducts} from "./bll/shopTableReducer";
 import ProductOptions from './ProductOptions/ProductOptions';
 import {ProductType} from "./dal/apiShopTable";
 
@@ -14,6 +14,7 @@ type MapStateType = {
 type MapDispatchType = {
     getProducts:()=>void
     addProduct:(productName: string, price: number, productType: string)=>void
+    delProduct:(id:string)=>void
 }
 type PropsType = MapDispatchType & MapStateType & RouteComponentProps
 
@@ -55,7 +56,7 @@ class ShopTableContainer extends Component<PropsType> {
                 <button onClick={this.addProduct}>Add</button>
             </div>,
             render: (el: ProductType, index) => {
-                return <ProductOptions/>
+                return <ProductOptions el={el} delProduct={this.props.delProduct}/>
             }
         }
     ]
@@ -80,4 +81,4 @@ const mstp = (state: AppStateType): MapStateType =>
 
 
 let WithRouterShopTableContainer = withRouter(ShopTableContainer);
-export default connect(mstp, {getProducts,addProduct})(WithRouterShopTableContainer)
+export default connect(mstp, {getProducts,addProduct,delProduct})(WithRouterShopTableContainer)
