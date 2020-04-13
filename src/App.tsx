@@ -12,6 +12,7 @@ import AuthMe from "./Login/AuthMe";
 
 import Color from './Color/Color';
 import WithRouterShopTableContainer from "./ShopTable/ShopTableContainer";
+import ShopBasketContainer from "./ShopBasket/ShopBasketContainer";
 
 
 
@@ -50,6 +51,7 @@ class App extends React.Component {
                             <li><Link to="time">time</Link></li>
                             <li><Link to="color">color</Link></li>
                             <li><Link to="shop-table">shop-table</Link></li>
+                            <li><Link to="shop-basket">shop-basket</Link></li>
                         </ul>
 
                       </>
@@ -62,6 +64,7 @@ class App extends React.Component {
                         <Route exact path='/authme/' component={AuthMe}/>
                         <Route exact path='/color/' component={Color}/>
                         <Route exact path='/shop-table/' component={WithRouterShopTableContainer}/>
+                        <Route exact path='/shop-basket/' component={ShopBasketContainer}/>
 
                     </div>
 

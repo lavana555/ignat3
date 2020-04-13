@@ -1,34 +1,21 @@
 import React, {Component} from 'react';
-import ShopTable, {ITableModel} from "./ShopTable";
+
 import {connect} from "react-redux";
-import {RouteComponentProps, withRouter} from "react-router";
 import {AppStateType} from "../store";
-import {addProduct, delProduct, getProducts, updateProduct} from "./bll/shopTableReducer";
-import ProductOptions from './ProductOptions/ProductOptions';
-import {ProductType} from "./dal/apiShopTable";
-import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
+import { delFromBasket} from "./bll/shopBasketReducer";
+import {ProductType} from "../ShopTable/dal/apiShopTable";
+import ShopTable, { ITableModel } from '../ShopTable/ShopTable';
 
 
 type MapStateType = {
     products: Array<ProductType>
 }
 type MapDispatchType = {
-    getProducts: () => void
-    addProduct: (productName: string, price: number, productType: string) => void
-    updateProduct: (productName: string, price: number, id: string) => void
-    delProduct: (id: string) => void
-    addToBasket: (product: ProductType) => void
+    delFromBasket: (id: string) => void
 }
-type PropsType = MapDispatchType & MapStateType & RouteComponentProps
+type PropsType = MapDispatchType & MapStateType
 
-class ShopTableContainer extends Component<PropsType> {
-    addProduct = (): void => {
-        let productName = "testKMB23-1";
-        let price = 5000;
-        let productType = "gold";
-        this.props.addProduct(productName, price, productType)
-    }
-
+class ShopBasketContainer extends Component<PropsType> {
 
     arr1: Array<ITableModel> = [
         {
@@ -57,21 +44,14 @@ class ShopTableContainer extends Component<PropsType> {
         },
         {
             title: () => <div style={{width: "15%", textAlign: "start"}}>
-                <button onClick={this.addProduct}>Add</button>
+              ...
             </div>,
             render: (el: ProductType, index) => {
-                return <ProductOptions el={el}
-                                       delProduct={this.props.delProduct}
-                                       updateProduct={this.props.updateProduct}
-                                       addToBasket={this.props.addToBasket}/>
+                return <div style={{width: "15%", textAlign: "start"}}><button onClick={()=>this.props.delFromBasket(el.id)}>Delete</button></div>
             }
         }
     ]
 
-
-    componentDidMount(): void {
-        this.props.getProducts();
-    }
 
     render() {
         return (
@@ -84,15 +64,11 @@ class ShopTableContainer extends Component<PropsType> {
 
 const mstp = (state: AppStateType): MapStateType =>
     ({
-        products: state.shop.products
+        products: state.basket.products
     })
 
 
-let WithRouterShopTableContainer = withRouter(ShopTableContainer);
+
 export default connect(mstp, {
-    getProducts,
-    addProduct,
-    delProduct,
-    updateProduct,
-    addToBasket
-})(WithRouterShopTableContainer)
+   delFromBasket
+})(ShopBasketContainer)
