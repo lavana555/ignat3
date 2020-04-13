@@ -14,7 +14,8 @@ const rootReducer = combineReducers({
     newPass: newPassReducer,
     US:UserReducer,
     BL:booleanReducer,
-    // profile:profileReducer
+    // profile:profileReducer,
+
 })
 
 type RootReducerType = typeof rootReducer
