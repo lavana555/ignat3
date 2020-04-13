@@ -6,6 +6,7 @@ import {newPassReducer} from "./NewPass/bll/newPassReducer";
 import logInReducer from "./Login/login-reducer";
 import {UserReducer} from "./Users/UsersReducers";
 import {booleanReducer} from "./booleanReducer/booleanReducer";
+import searchReducer from "./Search/SearchReducer";
 
 const rootReducer = combineReducers({
     logIn: logInReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     newPass: newPassReducer,
     US:UserReducer,
     BL:booleanReducer,
+    search: searchReducer
     // profile:profileReducer,
 
 })

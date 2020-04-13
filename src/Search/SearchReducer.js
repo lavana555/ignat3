@@ -6,9 +6,9 @@ export const FILTER_DATA = "SearchReducer/FILTER_DATA";
 // }
 const initialState = {
 products: [
-    {type: 'car', cost: 1500},
-    {type: 'house', cost: 27000},
-    {type: 'cat', cost: 7000}
+    {productName: 'car', cost: 1500},
+    {productName: 'house', cost: 27000},
+    {productName: 'cat', cost: 7000}
 ]
 };
 
