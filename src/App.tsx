@@ -6,14 +6,11 @@ import {BrowserRouter, Link, Route} from "react-router-dom";
 import WithRouterNewPassContainer from "./NewPass/NewPassContainer";
 import Loginization from "./Login/Loginization";
 import Users from "./Users/Users";
-
 import Time from "./Time/Time";
 import AuthMe from "./Login/AuthMe";
-
 import Color from './Color/Color';
-import BuyMaS from "./buyModalsAndSettingsCopy/buyMaS";
-
-
+import ShopBasketContainer from "./ShopBasket/ShopBasketContainer";
+import ShopTableContainer from "./ShopTable/ShopTableContainer";
 
 
 class App extends React.Component {
@@ -50,7 +47,8 @@ class App extends React.Component {
                             <li><Link to="modals">modals</Link></li>
                             <li><Link to="time">time</Link></li>
                             <li><Link to="color">color</Link></li>
-                              <li><Link to="buymas">buymas</Link></li>
+                            <li><Link to="shop-table">shop-table</Link></li>
+                            <li><Link to="shop-basket">shop-basket</Link></li>
                         </ul>
 
                       </>
@@ -59,12 +57,11 @@ class App extends React.Component {
                         <Route exact path='/forgot/' component={WithRouterRecoveryPassContainer}/>
                         <Route exact path='/reset-password/:token' component={WithRouterNewPassContainer}/>
                         <Route exact path='/login/' component={Loginization}/>
-
                         <Route exact path='/time/' component={Time}/>
                         <Route exact path='/authme/' component={AuthMe}/>
-
                         <Route exact path='/color/' component={Color}/>
-                        <Route exact path='/buymas/' component={BuyMaS}/>
+                        <Route exact path='/shop-table/' component={ShopTableContainer}/>
+                        <Route exact path='/shop-basket/' component={ShopBasketContainer}/>
 
                     </div>
 
