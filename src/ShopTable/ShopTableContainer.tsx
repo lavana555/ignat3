@@ -1,36 +1,41 @@
-import React, {Component} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import ShopTable, {ITableModel} from "./ShopTable";
-import {connect} from "react-redux";
-import {RouteComponentProps, withRouter} from "react-router";
-import {AppStateType} from "../store";
-import {addProduct, delProduct, getProducts, updateProduct} from "./bll/shopTableReducer";
+import {useDispatch, useSelector} from "react-redux";
 import ProductOptions from './ProductOptions/ProductOptions';
 import {ProductType} from "./dal/apiShopTable";
+import {addProduct, delProduct, getProducts, updateProduct} from "./bll/shopTableReducer";
 import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
+import {AppStateType} from "../store";
 
 
-type MapStateType = {
-    products: Array<ProductType>
-}
-type MapDispatchType = {
-    getProducts: () => void
-    addProduct: (productName: string, price: number, productType: string) => void
-    updateProduct: (productName: string, price: number, id: string) => void
-    delProduct: (id: string) => void
-    addToBasket: (product: ProductType) => void
-}
-type PropsType = MapDispatchType & MapStateType & RouteComponentProps
+const ShopTableContainer=()=>{
+    const products = useSelector((state:AppStateType) => state.shop.products);
+    const dispatch = useDispatch();
+    useEffect( ()=>{dispatch(getProducts())
+    },[]);
 
-class ShopTableContainer extends Component<PropsType> {
-    addProduct = (): void => {
+    const addPr = useCallback(() => {
         let productName = "testKMB23-1";
         let price = 5000;
         let productType = "gold";
-        this.props.addProduct(productName, price, productType)
-    }
+        dispatch(addProduct(productName, price, productType));
+    }, []);
+
+    const deleteProduct = useCallback((id) => {
+        dispatch(delProduct(id));
+    }, []);
+    const updatePr = useCallback((newProductName, newPrice, id) => {
+        dispatch(updateProduct(newProductName, newPrice, id));
+    }, []);
+
+    const addToBask = useCallback((product) => {
+        dispatch(addToBasket(product));
+    }, []);
 
 
-    arr1: Array<ITableModel> = [
+
+
+ let   arr1: Array<ITableModel> = [
         {
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
@@ -57,42 +62,23 @@ class ShopTableContainer extends Component<PropsType> {
         },
         {
             title: () => <div style={{width: "15%", textAlign: "start"}}>
-                <button onClick={this.addProduct}>Add</button>
+                <button onClick={addPr}>Add</button>
             </div>,
             render: (el: ProductType, index) => {
                 return <ProductOptions el={el}
-                                       delProduct={this.props.delProduct}
-                                       updateProduct={this.props.updateProduct}
-                                       addToBasket={this.props.addToBasket}/>
+                                       delProduct={deleteProduct}
+                                       updateProduct={updatePr}
+                                       addToBasket={addToBask}/>
             }
         }
-    ]
+    ];
 
-
-    componentDidMount(): void {
-        this.props.getProducts();
-    }
-
-    render() {
         return (
             <div>
-                <ShopTable model={this.arr1} data={this.props.products}/>
+                <ShopTable model={arr1} data={products}/>
             </div>
         );
-    }
+
 }
 
-const mstp = (state: AppStateType): MapStateType =>
-    ({
-        products: state.shop.products
-    })
-
-
-let WithRouterShopTableContainer = withRouter(ShopTableContainer);
-export default connect(mstp, {
-    getProducts,
-    addProduct,
-    delProduct,
-    updateProduct,
-    addToBasket
-})(WithRouterShopTableContainer)
+export default ShopTableContainer

@@ -1,23 +1,15 @@
-import React, {Component} from 'react';
-
-import {connect} from "react-redux";
-import {AppStateType} from "../store";
+import React  from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import { delFromBasket} from "./bll/shopBasketReducer";
 import {ProductType} from "../ShopTable/dal/apiShopTable";
 import ShopTable, { ITableModel } from '../ShopTable/ShopTable';
+import {AppStateType} from "../store";
 
 
-type MapStateType = {
-    products: Array<ProductType>
-}
-type MapDispatchType = {
-    delFromBasket: (id: string) => void
-}
-type PropsType = MapDispatchType & MapStateType
-
-class ShopBasketContainer extends Component<PropsType> {
-
-    arr1: Array<ITableModel> = [
+const ShopBasketContainer =()=>{
+    const dispatch = useDispatch();
+    const products = useSelector((state:AppStateType) => state.basket.products);
+    let arr1: Array<ITableModel> = [
         {
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
@@ -47,28 +39,23 @@ class ShopBasketContainer extends Component<PropsType> {
               ...
             </div>,
             render: (el: ProductType, index) => {
-                return <div style={{width: "15%", textAlign: "start"}}><button onClick={()=>this.props.delFromBasket(el.id)}>Delete</button></div>
+                return <div style={{width: "15%", textAlign: "start"}}>
+                    <button onClick={()=>dispatch(delFromBasket(el.id))}>Delete</button>
+                </div>
             }
         }
     ]
 
-
-    render() {
         return (
             <div>
-                <ShopTable model={this.arr1} data={this.props.products}/>
+                <ShopTable model={arr1} data={products}/>
             </div>
         );
-    }
+
 }
 
-const mstp = (state: AppStateType): MapStateType =>
-    ({
-        products: state.basket.products
-    })
 
 
 
-export default connect(mstp, {
-   delFromBasket
-})(ShopBasketContainer)
+
+export default ShopBasketContainer
