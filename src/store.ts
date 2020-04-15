@@ -8,6 +8,7 @@ import {UserReducer} from "./Users/UsersReducers";
 import {booleanReducer} from "./booleanReducer/booleanReducer";
 import {shopTableReducer} from "./ShopTable/bll/shopTableReducer";
 import {shopBasketReducer} from "./ShopBasket/bll/shopBasketReducer";
+import searchReducer from "./Search/SearchReducer";
 
 const rootReducer = combineReducers({
     logIn: logInReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     US:UserReducer,
     BL:booleanReducer,
     shop:shopTableReducer,
-    basket:shopBasketReducer
+    basket:shopBasketReducer,
+    search: searchReducer
     // profile:profileReducer
 })
 

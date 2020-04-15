@@ -12,6 +12,7 @@ import Color from './Color/Color';
 import ShopBasketContainer from "./ShopBasket/ShopBasketContainer";
 import ShopTableContainer from "./ShopTable/ShopTableContainer";
 import BuyMaS from "./buyModalsAndSettingsCopy/buyMaS";
+import SeparateSearch from "./Search/reserve";
 
 
 class App extends React.Component {
@@ -51,6 +52,7 @@ class App extends React.Component {
                             <li><Link to="shop-table">shop-table</Link></li>
                             <li><Link to="shop-basket">shop-basket</Link></li>
                             <li><Link to="buyMas">buyMas</Link></li>
+                            <li><Link to="search">search</Link></li>
                         </ul>
 
                       </>
@@ -65,6 +67,7 @@ class App extends React.Component {
                         <Route exact path='/shop-table/' component={ShopTableContainer}/>
                         <Route exact path='/shop-basket/' component={ShopBasketContainer}/>
                         <Route exact path='/buyMas/' component={BuyMaS}/>
+                        <Route exact path='/search/' component={SeparateSearch}/>
 
                     </div>
 

@@ -1,48 +1,39 @@
-import React, {Component} from 'react';
-import {connect} from "react-redux";
+import React, {useState} from 'react';
+import {useDispatch} from "react-redux";
+import {findProductC} from "./SearchReducer";
 
-
-type MapStateType = {
-products: object
+type SearchPropsType = {
+    searchProduct: (value: string) => void
 }
-// type MapDispatchType = {
-//     loginTC: (email: string, password: string, rememberMe: boolean) => void
-//     // rememberMeAC: (rememberMe: boolean)=>void
-// }
-type PropsType = MapStateType;
 
+const Search: React.FC<SearchPropsType> = (props) => {
+    //const dispatch = useDispatch();
 
-class Search extends Component<PropsType> {
-
-    dataSearch = (e: any) => {
+    const [inputDesiredProduct, setDesiredProduct] = useState('');
+    const dataSearch = (e: any) => {
         const value = e.target.value.toLowerCase();
-
-        const filter = data.filter(product => {
-            return user.name.toLowerCase().includes(value);
-        });
-
-        
+        setDesiredProduct(value)
     };
 
-    render() {
-        return <div>
+    const searchProduct = () => {
+        props.searchProduct(inputDesiredProduct);
+    };
 
-                <input
-                    value={term}
-                    type="text"
-                    className="form-control"
-                    placeholder="Search product..."
-                    onChange={this.dataSearch}
-                />
 
-        </div>
-    }
+    return <div>
+
+        <input
+            value={inputDesiredProduct}
+            type="text"
+            style={{margin: "10px", width: "250px"}}
+            placeholder="Search product..."
+            onChange={dataSearch}
+        />
+        <button onClick={searchProduct}>search</button>
+
+    </div>
+
 };
 
 
-const mstp = (state: any): MapStateType => ({
-    products: state.search.products
-});
-
-
-export default connect(mstp, {})(Search)
+export default Search;

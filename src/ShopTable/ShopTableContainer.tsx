@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import ShopTable, {ITableModel} from "./ShopTable";
 import {useDispatch, useSelector} from "react-redux";
 import ProductOptions from './ProductOptions/ProductOptions';
@@ -6,6 +6,8 @@ import {ProductType} from "./dal/apiShopTable";
 import {addProduct, delProduct, getProducts, updateProduct} from "./bll/shopTableReducer";
 import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
 import {AppStateType} from "../store";
+import {findProductC} from "../Search/SearchReducer";
+import Search from "../Search/Search";
 
 
 const ShopTableContainer=()=>{
@@ -33,9 +35,15 @@ const ShopTableContainer=()=>{
     }, []);
 
 
+    const searchProduct = (value: string) => {
+        dispatch(findProductC(value));
+    };
 
 
- let   arr1: Array<ITableModel> = [
+
+
+
+    let   arr1: Array<ITableModel> = [
         {
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
@@ -75,6 +83,7 @@ const ShopTableContainer=()=>{
 
         return (
             <div>
+                <Search searchProduct = {searchProduct}/>
                 <ShopTable model={arr1} data={products}/>
             </div>
         );
