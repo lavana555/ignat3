@@ -5,11 +5,14 @@ const GET_PRODUCTS = 'app/shopTableReducer/GET_PRODUCTS';
 const ADD_PRODUCT = 'app/shopTableReducer/ADD_PRODUCT';
 const DELETE_PRODUCT = 'app/shopTableReducer/DELETE_PRODUCT';
 const UPDATE_PRODUCT = 'app/shopTableReducer/UPDATE_PRODUCT';
+const GET_PRODUCT_COUNT = 'app/shopTableReducer/GET_PRODUCT_COUNT';
 
 
 const initialState = {
-    products: [] as Array<ProductType>
-}
+    products: [] as Array<ProductType>,
+    productTotalCount: 1 as number
+};
+
 type InitialStateType = typeof initialState
 
 export const shopTableReducer = (state = initialState, action: shopTableActionType): InitialStateType => {
@@ -38,12 +41,18 @@ export const shopTableReducer = (state = initialState, action: shopTableActionTy
                 }
                 )
             };
+        case  GET_PRODUCT_COUNT:
+            return {
+                ...state,
+                productTotalCount: action.productCount
+            };
         default:
             return state
     }
 }
 
 type shopTableActionType = GetProductsActionType | AddProductActionType | DeleteProductActionType|UpdateProductActionType
+| setProductTotalCountType
 
 type GetProductsActionType = {
     type: typeof GET_PRODUCTS
@@ -67,10 +76,16 @@ type UpdateProductActionType = {
     price:number
 }
 const updateProductSuccess = (productName:string,price:number,id: string): UpdateProductActionType => ({type: UPDATE_PRODUCT, id,productName,price});
+const setProductTotalCount = (productCount: number): setProductTotalCountType => ({type: GET_PRODUCT_COUNT, productCount});
+type setProductTotalCountType ={
+    type: typeof GET_PRODUCT_COUNT
+    productCount: number
+}
 
 export const getProducts = () => async (dispatch: Dispatch) => {
-    let products = await apiShopTable.getProducts();
-    dispatch(getProductsSuccess(products))
+    let data = await apiShopTable.getProducts();
+    dispatch(getProductsSuccess(data.products))
+    dispatch(setProductTotalCount(data.productTotalCount))
 };
 export const addProduct = (productName: string, price: number, productType: string) => async (dispatch: Dispatch) => {
     let newProduct = await apiShopTable.addProduct(productName, price, productType);

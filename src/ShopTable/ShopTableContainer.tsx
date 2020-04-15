@@ -12,6 +12,7 @@ import Search from "../Search/Search";
 
 const ShopTableContainer=()=>{
     const products = useSelector((state:AppStateType) => state.shop.products);
+    const productCount = useSelector((state:AppStateType) => state.shop.productTotalCount);
     const dispatch = useDispatch();
     useEffect( ()=>{dispatch(getProducts())
     },[]);
@@ -35,9 +36,9 @@ const ShopTableContainer=()=>{
     }, []);
 
 
-    const searchProduct = (value: string) => {
+    const searchProduct= useCallback((value: string) => {
         dispatch(findProductC(value));
-    };
+    }, []) ;
 
 
 
@@ -83,6 +84,7 @@ const ShopTableContainer=()=>{
 
         return (
             <div>
+              
                 <Search searchProduct = {searchProduct}/>
                 <ShopTable model={arr1} data={products}/>
             </div>
