@@ -10,6 +10,7 @@ import {shopTableReducer} from "./ShopTable/bll/shopTableReducer";
 import {shopBasketReducer} from "./ShopBasket/bll/shopBasketReducer";
 import {colorReducer} from "./buyModalsAndSettingsCopy/shopTableReducer";
 
+
 const rootReducer = combineReducers({
     logIn: logInReducer,
     regIn: regInReducer,
@@ -19,7 +20,11 @@ const rootReducer = combineReducers({
     BL:booleanReducer,
     shop:shopTableReducer,
     basket:shopBasketReducer,
+<<<<<<< HEAD
     color:colorReducer
+=======
+    // search: searchReducer
+>>>>>>> b346a733f757be6091764bfa3c6d2fd94eb86b64
     // profile:profileReducer
 })
 

@@ -37,8 +37,10 @@ type UpdatedProductResponseType = {
 }
 
 export const apiShopTable = {
-    getProducts() {
-        return instance.get<GetProductsResponseType>(``).then((res) => res.data.products)
+    getProducts(page: number, pageCount: number) {
+        return instance.get<GetProductsResponseType>(`?page=${page}&pageCount=${pageCount}`).then((res) => {
+            return res.data
+        debugger})
     },
     addProduct(productName: string, price: number, productType: string) {
         return instance.post<AddProductResponseType>(``,{product: {
