@@ -1,14 +1,27 @@
 import React  from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import { delFromBasket} from "./bll/shopBasketReducer";
+import {delFromBasket, getFilteredBasket} from "./bll/shopBasketReducer";
 import {ProductType} from "../ShopTable/dal/apiShopTable";
 import ShopTable, { ITableModel } from '../ShopTable/ShopTable';
 import {AppStateType} from "../store";
+import Search from "../Search/Search";
+import Paginator from "../pagination/Paginator";
+import {getProducts} from "../ShopTable/bll/shopTableReducer";
+
 
 
 const ShopBasketContainer =()=>{
     const dispatch = useDispatch();
     const products = useSelector((state:AppStateType) => state.basket.products);
+    const productCount = useSelector((state:AppStateType) => state.basket.productTotalCount);
+    const currentPage = useSelector((state:AppStateType) => state.basket.currentPage);
+    // const pageCount = useSelector((state:AppStateType) => state.basket.pageCount);
+    const searchProduct= (value: string) => {
+        dispatch(getFilteredBasket(value));
+    };
+    const onCurrentPageChanged = (page: number) => {
+        //dispatch(getProducts(page, pageCount=5));
+    };
     let arr1: Array<ITableModel> = [
         {
             title: () => <div
@@ -48,7 +61,11 @@ const ShopBasketContainer =()=>{
 
         return (
             <div>
+                <Search searchProduct={searchProduct}/>
                 <ShopTable model={arr1} data={products}/>
+                <Paginator productCount={productCount}
+                           onPageChanged={onCurrentPageChanged}
+                           currentPage={currentPage}/>
             </div>
         );
 
