@@ -3,7 +3,14 @@ import ShopTable, {ITableModel} from "./ShopTable";
 import {useDispatch, useSelector} from "react-redux";
 import ProductOptions from './ProductOptions/ProductOptions';
 import {ProductType} from "./dal/apiShopTable";
-import {addProduct, delProduct, findProductC, getProducts, updateProduct} from "./bll/shopTableReducer";
+import {
+    addProduct,
+    delProduct,
+    findProductC,
+    getFilteredProducts,
+    getProducts,
+    updateProduct
+} from "./bll/shopTableReducer";
 import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
 import {AppStateType} from "../store";
 import BuyMaSadd from "../buyModalsAndSettingsCopy/buyMaSadd";
@@ -44,10 +51,10 @@ const ShopTableContainer=()=>{
 
 
     const searchProduct= useCallback((value: string) => {
-        dispatch(findProductC(value));
+        dispatch(getFilteredProducts(value));
     }, []) ;
 
-  const onPageChanged= (page: number) => {
+  const onCurrentPageChanged= (page: number) => {
         dispatch(getProducts(page, pageCount));
     };
 
@@ -101,7 +108,7 @@ const ShopTableContainer=()=>{
                 <Search searchProduct = {searchProduct}/>
                 <ShopTable model={arr1} data={products}/>
                 <Paginator productCount = {productCount}
-                           onPageChanged = {onPageChanged}
+                           onPageChanged = {onCurrentPageChanged}
                            currentPage ={currentPage}/>
             </div>
         );

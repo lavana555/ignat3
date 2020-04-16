@@ -107,11 +107,18 @@ type setCurrentPageType ={
 
 
 export const getProducts = (page: number, pageCount: number) => async (dispatch: Dispatch) => {
-    debugger
+
     dispatch(setCurrentPage(page));
     let data = await apiShopTable.getProducts(page, pageCount);
     dispatch(getProductsSuccess(data.products))
     dispatch(setProductTotalCount(data.productTotalCount))
+};
+export const getFilteredProducts = (product: string) => async (dispatch: Dispatch) => {
+
+    //dispatch(setCurrentPage(page));
+    let data = await apiShopTable.getFilteredProducts(product);
+    dispatch(getProductsSuccess(data.products))
+
 };
 export const addProduct = (productName: string, price: number, productType: string) => async (dispatch: Dispatch) => {
     let newProduct = await apiShopTable.addProduct(productName, price, productType);
