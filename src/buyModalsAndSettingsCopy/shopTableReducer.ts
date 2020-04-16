@@ -1,4 +1,5 @@
 import {Dispatch} from "redux";
+import {apiShopTable} from "../ShopTable/dal/apiShopTable";
 
 
 
@@ -42,4 +43,6 @@ export const addNewColorBG = (colorbg:any,colorbtn:any) =>  (dispatch: Dispatch)
 
     dispatch(getNewColorBGSuccess(colorbg,colorbtn))
 };
+
+
 
