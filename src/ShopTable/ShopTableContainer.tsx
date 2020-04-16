@@ -6,10 +6,8 @@ import {ProductType} from "./dal/apiShopTable";
 import {
     addProduct,
     delProduct,
-    findProductC,
-    getFilteredProducts,
     getProducts,
-    updateProduct
+    updateProduct, getFilteredProducts
 } from "./bll/shopTableReducer";
 import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
 import {AppStateType} from "../store";
@@ -19,20 +17,20 @@ import Search from "../Search/Search";
 import Paginator from "../pagination/Paginator";
 
 
-const ShopTableContainer=()=>{
-    const products = useSelector((state:AppStateType) => state.shop.products);
-    const productCount = useSelector((state:AppStateType) => state.shop.productTotalCount);
-    const pageCount = useSelector((state:AppStateType) => state.shop.pageCount);
-    const currentPage = useSelector((state:AppStateType) => state.shop.currentPage);
+const ShopTableContainer = () => {
+    const products = useSelector((state: AppStateType) => state.shop.products);
+    const productCount = useSelector((state: AppStateType) => state.shop.productTotalCount);
+    const pageCount = useSelector((state: AppStateType) => state.shop.pageCount);
+    const currentPage = useSelector((state: AppStateType) => state.shop.currentPage);
 
     const dispatch = useDispatch();
-    useEffect( (page = 1, pageCount = 5)=>{
+    useEffect((page = 1, pageCount = 5) => {
         debugger
         dispatch(getProducts(page, pageCount))
-    },[]);
+    }, []);
 
-    const addPr = useCallback((productName:any, price:any) => {
-      // let productName = "testKMB23-1";
+    const addPr = useCallback((productName: any, price: any) => {
+        // let productName = "testKMB23-1";
         //let price = 5000;
         let productType = "gold";
         dispatch(addProduct(productName, price, productType));
@@ -50,18 +48,15 @@ const ShopTableContainer=()=>{
     }, []);
 
 
-    const searchProduct= useCallback((value: string) => {
-        dispatch(getFilteredProducts(value));
-    }, []) ;
-
-  const onCurrentPageChanged= (page: number) => {
+    const onCurrentPageChanged = (page: number) => {
         dispatch(getProducts(page, pageCount));
+    };
+    const searchProduct= (value: string) => {
+        dispatch(getFilteredProducts(value));
     };
 
 
-
-
-    let   arr1: Array<ITableModel> = [
+    let arr1: Array<ITableModel> = [
         {
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
@@ -89,9 +84,9 @@ const ShopTableContainer=()=>{
         {
             title: () => <div style={{width: "15%", textAlign: "start"}}>
                 {/*<button onClick={addPr}>Add</button>*/}
-              <BuyMaSadd
-                   addPr={addPr}
-              />
+                <BuyMaSadd
+                    addPr={addPr}
+                />
             </div>,
             render: (el: ProductType, index) => {
                 return <ProductOptions el={el}
@@ -102,16 +97,16 @@ const ShopTableContainer=()=>{
         }
     ];
 
-        return (
-            <div>
+    return (
+        <div>
 
-                <Search searchProduct = {searchProduct}/>
-                <ShopTable model={arr1} data={products}/>
-                <Paginator productCount = {productCount}
-                           onPageChanged = {onCurrentPageChanged}
-                           currentPage ={currentPage}/>
-            </div>
-        );
+            <Search searchProduct={searchProduct}/>
+            <ShopTable model={arr1} data={products}/>
+            <Paginator productCount={productCount}
+                       onPageChanged={onCurrentPageChanged}
+                       currentPage={currentPage}/>
+        </div>
+    );
 
 }
 

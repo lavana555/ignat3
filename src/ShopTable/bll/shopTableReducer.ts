@@ -8,7 +8,6 @@ const DELETE_PRODUCT = 'app/shopTableReducer/DELETE_PRODUCT';
 const UPDATE_PRODUCT = 'app/shopTableReducer/UPDATE_PRODUCT';
 const GET_PRODUCT_COUNT = 'app/shopTableReducer/GET_PRODUCT_COUNT';
 const SET_PRODUCT_PAGE = 'app/shopTableReducer/SET_PRODUCT_PAGE';
-const FILTER_DATA = "SearchReducer/FILTER_DATA";
 
 
 const initialState = {
@@ -57,20 +56,14 @@ export const shopTableReducer = (state = initialState, action: shopTableActionTy
                 ...state,
                 currentPage: action.page
             };
-        case FILTER_DATA:
-            return {
-                ...state,
-                products: state.products.filter(p => {
-                    return p.productName.toLowerCase().includes(action.value)
-                })
-            };
+
         default:
             return state
     }
-}
+};
 
 type shopTableActionType = GetProductsActionType | AddProductActionType | DeleteProductActionType|UpdateProductActionType
-| setProductTotalCountType | setCurrentPageType | FilterSuccess
+| setProductTotalCountType | setCurrentPageType
 
 type GetProductsActionType = {
     type: typeof GET_PRODUCTS
@@ -105,21 +98,18 @@ type setCurrentPageType ={
     page:number
 }
 
-
+//Get Page of Product
 export const getProducts = (page: number, pageCount: number) => async (dispatch: Dispatch) => {
-
     dispatch(setCurrentPage(page));
     let data = await apiShopTable.getProducts(page, pageCount);
-    dispatch(getProductsSuccess(data.products))
+    dispatch(getProductsSuccess(data.products));
     dispatch(setProductTotalCount(data.productTotalCount))
 };
 export const getFilteredProducts = (product: string) => async (dispatch: Dispatch) => {
-
-    //dispatch(setCurrentPage(page));
     let data = await apiShopTable.getFilteredProducts(product);
     dispatch(getProductsSuccess(data.products))
-
 };
+
 export const addProduct = (productName: string, price: number, productType: string) => async (dispatch: Dispatch) => {
     let newProduct = await apiShopTable.addProduct(productName, price, productType);
     dispatch(addProductSuccess(newProduct))
@@ -139,11 +129,3 @@ export const updateProduct = (productName:string,price:number,id: string) => asy
 
 
 
-export const filterSuccess = (value: string): FilterSuccess => ({type: FILTER_DATA, value});
-type FilterSuccess = {
-    type: typeof FILTER_DATA
-    value: string
-}
-export const findProductC = (value: string) => async (dispatch: Dispatch) => {
-    dispatch(filterSuccess(value))
-};
