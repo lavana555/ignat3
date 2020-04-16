@@ -104,13 +104,7 @@ type setCurrentPageType ={
     type: typeof SET_PRODUCT_PAGE
     page:number
 }
-// export const requestUsers = (page, pageSize) => async (dispatch) => {
-//     dispatch(setCurrentPage(page));
-//     let data = await usersAPI.getUsers(page, pageSize)
-//     dispatch(setUsers(data.items));
-//     dispatch(setTotalUsersCount(data.totalCount))
-//
-// };
+
 
 export const getProducts = (page: number, pageCount: number) => async (dispatch: Dispatch) => {
     debugger
