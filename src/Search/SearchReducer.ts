@@ -13,7 +13,7 @@ const initialState: InitialStateType = {
 
 
 const searchReducer = (state = initialState, action: SearchReducerActionType) => {
-    debugger
+
     switch (action.type) {
         // case GET_PRODUCTS:
         //     return {

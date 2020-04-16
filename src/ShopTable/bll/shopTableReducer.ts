@@ -6,16 +6,20 @@ const ADD_PRODUCT = 'app/shopTableReducer/ADD_PRODUCT';
 const DELETE_PRODUCT = 'app/shopTableReducer/DELETE_PRODUCT';
 const UPDATE_PRODUCT = 'app/shopTableReducer/UPDATE_PRODUCT';
 const GET_PRODUCT_COUNT = 'app/shopTableReducer/GET_PRODUCT_COUNT';
+const SET_PRODUCT_PAGE = 'app/shopTableReducer/SET_PRODUCT_PAGE';
 
 
 const initialState = {
     products: [] as Array<ProductType>,
-    productTotalCount: 1 as number
+    productTotalCount: 0 as number,
+    currentPage: 1 as number,
+    pageCount: 5 as number
 };
 
 type InitialStateType = typeof initialState
 
 export const shopTableReducer = (state = initialState, action: shopTableActionType): InitialStateType => {
+
     switch (action.type) {
         case  GET_PRODUCTS:
             return {
@@ -46,13 +50,18 @@ export const shopTableReducer = (state = initialState, action: shopTableActionTy
                 ...state,
                 productTotalCount: action.productCount
             };
+        case  SET_PRODUCT_PAGE:
+            return {
+                ...state,
+                currentPage: action.page
+            };
         default:
             return state
     }
 }
 
 type shopTableActionType = GetProductsActionType | AddProductActionType | DeleteProductActionType|UpdateProductActionType
-| setProductTotalCountType
+| setProductTotalCountType | setCurrentPageType
 
 type GetProductsActionType = {
     type: typeof GET_PRODUCTS
@@ -81,9 +90,23 @@ type setProductTotalCountType ={
     type: typeof GET_PRODUCT_COUNT
     productCount: number
 }
+const setCurrentPage = (page:number): setCurrentPageType => ({type: SET_PRODUCT_PAGE, page});
+type setCurrentPageType ={
+    type: typeof SET_PRODUCT_PAGE
+    page:number
+}
+// export const requestUsers = (page, pageSize) => async (dispatch) => {
+//     dispatch(setCurrentPage(page));
+//     let data = await usersAPI.getUsers(page, pageSize)
+//     dispatch(setUsers(data.items));
+//     dispatch(setTotalUsersCount(data.totalCount))
+//
+// };
 
-export const getProducts = () => async (dispatch: Dispatch) => {
-    let data = await apiShopTable.getProducts();
+export const getProducts = (page: number, pageCount: number) => async (dispatch: Dispatch) => {
+    debugger
+    dispatch(setCurrentPage(page));
+    let data = await apiShopTable.getProducts(page, pageCount);
     dispatch(getProductsSuccess(data.products))
     dispatch(setProductTotalCount(data.productTotalCount))
 };

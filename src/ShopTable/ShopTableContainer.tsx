@@ -8,13 +8,19 @@ import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
 import {AppStateType} from "../store";
 import {findProductC} from "../Search/SearchReducer";
 import Search from "../Search/Search";
+import Paginator from "../pagination/Paginator";
 
 
 const ShopTableContainer=()=>{
     const products = useSelector((state:AppStateType) => state.shop.products);
     const productCount = useSelector((state:AppStateType) => state.shop.productTotalCount);
+    const pageCount = useSelector((state:AppStateType) => state.shop.pageCount);
+    const currentPage = useSelector((state:AppStateType) => state.shop.currentPage);
+
     const dispatch = useDispatch();
-    useEffect( ()=>{dispatch(getProducts())
+    useEffect( (page = 1, pageCount = 5)=>{
+        debugger
+        dispatch(getProducts(page, pageCount))
     },[]);
 
     const addPr = useCallback(() => {
@@ -39,6 +45,10 @@ const ShopTableContainer=()=>{
     const searchProduct= useCallback((value: string) => {
         dispatch(findProductC(value));
     }, []) ;
+
+  const onPageChanged= (page: number) => {
+        dispatch(getProducts(page, pageCount));
+    };
 
 
 
@@ -84,9 +94,12 @@ const ShopTableContainer=()=>{
 
         return (
             <div>
-              
+
                 <Search searchProduct = {searchProduct}/>
                 <ShopTable model={arr1} data={products}/>
+                <Paginator productCount = {productCount}
+                           onPageChanged = {onPageChanged}
+                           currentPage ={currentPage}/>
             </div>
         );
 
