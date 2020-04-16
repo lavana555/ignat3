@@ -5,15 +5,23 @@ import DeleteModal from "./DeleteModal";
 import AddToBasketModalModal from "./AddToBasketModal";
 import Modal from "./Modal";
 import AddNewProductModal from "./AddNewProductModal";
+import Stars from "./Stars";
+import ColorSite from "./Color";
+
+
+
+
+
 
 
 class BuyMaS extends React.Component {
 
     state = {
         modal: false,
-        modalchildren: ''
-    }
+        modalchildren: '',
 
+
+    }
 
     onAddToBasket = () => {
         this.setState({
@@ -46,11 +54,12 @@ class BuyMaS extends React.Component {
 
     }
 
-    onUpdateModal = () => {
+    onUpdateModal = (productName,productValue) => {
         this.setState({
             modal: false,
             modalchildren: ''
         })
+        this.props.updateProduct(productName,productValue)
     }
 
     onDeleteOKModal = () => {
@@ -58,6 +67,7 @@ class BuyMaS extends React.Component {
             modal: false,
             modalchildren: ''
         })
+        this.props.delProduct()
     }
 
     onDeleteNOModal = () => {
@@ -72,6 +82,7 @@ class BuyMaS extends React.Component {
             modal: false,
             modalchildren: ''
         })
+        this.props.addToBasket()
     }
 
     onNoBasketModal = () => {
@@ -104,6 +115,7 @@ class BuyMaS extends React.Component {
 
     render() {
 
+
         return (
             // {
             <div>
@@ -117,13 +129,15 @@ class BuyMaS extends React.Component {
                        onAddProductModal={this.onAddProductModal}
                        onNoProductModal={this.onNoProductModal}
                        onModal={this.onModal}
+                       el={this.props.el}
                 />
+
                 }
+
+                {/*style={{height: "100px", width: "100px", backgroundColor: color}*/}
                 <div>
-                    <div className={classes.btn} onClick={this.onAdd}>add</div>
+                    {/*<div className={classes.btn} onClick={this.onAdd}>add</div>*/}
                     <div className={classes.item}>
-                        <div> test product name</div>
-                        <div>1000</div>
                         <div className={classes.btns}>
                             <div className={classes.btn} onClick={this.onAddToBasket}>add to basket</div>
                             <div className={classes.btn} onClick={this.onUpDate}>update</div>
@@ -131,8 +145,7 @@ class BuyMaS extends React.Component {
                         </div>
                     </div>
                 </div>
-
-
+                {/*<ColorSite />*/}
             </div>
         );
 

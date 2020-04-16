@@ -1,0 +1,26 @@
+
+
+.stars{
+    display: flex;
+
+}
+
+
+.star{
+    margin-right: 5px;
+    width: 25px;
+    height: 25px;
+    background-image: url(../aseets/star.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+.starEmpty{
+    margin-right: 5px;
+    width: 25px;
+    height: 25px;
+    background-image: url(../aseets/starEmpty.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}

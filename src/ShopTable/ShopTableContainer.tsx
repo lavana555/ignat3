@@ -6,6 +6,7 @@ import {ProductType} from "./dal/apiShopTable";
 import {addProduct, delProduct, getProducts, updateProduct} from "./bll/shopTableReducer";
 import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
 import {AppStateType} from "../store";
+import BuyMaSadd from "../buyModalsAndSettingsCopy/buyMaSadd";
 
 
 const ShopTableContainer=()=>{
@@ -14,9 +15,9 @@ const ShopTableContainer=()=>{
     useEffect( ()=>{dispatch(getProducts())
     },[]);
 
-    const addPr = useCallback(() => {
-        let productName = "testKMB23-1";
-        let price = 5000;
+    const addPr = useCallback((productName:any, price:any) => {
+      // let productName = "testKMB23-1";
+        //let price = 5000;
         let productType = "gold";
         dispatch(addProduct(productName, price, productType));
     }, []);
@@ -35,7 +36,8 @@ const ShopTableContainer=()=>{
 
 
 
- let   arr1: Array<ITableModel> = [
+
+    let   arr1: Array<ITableModel> = [
         {
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
@@ -62,7 +64,10 @@ const ShopTableContainer=()=>{
         },
         {
             title: () => <div style={{width: "15%", textAlign: "start"}}>
-                <button onClick={addPr}>Add</button>
+                {/*<button onClick={addPr}>Add</button>*/}
+              <BuyMaSadd
+                   addPr={addPr}
+              />
             </div>,
             render: (el: ProductType, index) => {
                 return <ProductOptions el={el}

@@ -1,4 +1,7 @@
 import React, {CSSProperties, ReactNode} from 'react';
+import Stars from "../buyModalsAndSettingsCopy/Stars";
+import {useSelector} from "react-redux";
+import {AppStateType} from "../store";
 
 export interface ITableModel {
     title: (index: number) => ReactNode;
@@ -20,6 +23,7 @@ interface ITableProps {
 }
 
 const ShopTable: React.FC<ITableProps> = (
+
     {
         // loading,
         // error,
@@ -33,8 +37,9 @@ const ShopTable: React.FC<ITableProps> = (
         rowStyle,
     }
 ) => {
-
+ let colorbg=useSelector((state:AppStateType) => state.color.colorbg);
     return (
+
         <div
             style={{
                 margin: '0 10px',
@@ -63,6 +68,7 @@ const ShopTable: React.FC<ITableProps> = (
                     flexFlow: 'row',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    backgroundColor:colorbg,
                     ...headerStyle,
                 }}
             >
@@ -73,11 +79,13 @@ const ShopTable: React.FC<ITableProps> = (
                 style={{
                     border: '1px solid lime',
                     width: '100%',
+                    background:'#fff',
                     ...rowsStyle,
                 }}
             >
                 {data.map((dataItem: any, dataIndex: number) => (
                     <div
+
                         key={dataItem.id || dataIndex}
                         style={{
                             width: '100%',
@@ -89,6 +97,7 @@ const ShopTable: React.FC<ITableProps> = (
                         }}
                     >
                         {model.map((m, modelIndex) => m.render(dataItem, modelIndex, dataIndex))}
+<Stars />
                     </div>
                 ))}
             </div>
@@ -97,3 +106,7 @@ const ShopTable: React.FC<ITableProps> = (
 };
 
 export default ShopTable;
+
+
+
+// const name = useSelector(state => state.logIn.name);

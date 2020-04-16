@@ -4,6 +4,7 @@ import AddToBasketModal from "./AddToBasketModal";
 import DeleteModal from "./DeleteModal";
 import UpdateModal from "./UpdateModal";
 import AddNewProductModal from "./AddNewProductModal";
+import ColorSite from "./Color";
 
 
 class Modal extends React.Component {
@@ -23,10 +24,13 @@ class Modal extends React.Component {
                     return <DeleteModal onDeleteOKModal={this.props.onDeleteOKModal}
                                         onDeleteNOModal={this.props.onDeleteNOModal}/>
                 case 'update_product' :
-                    return <UpdateModal onUpdateModal={this.props.onUpdateModal}/>
+                    return <UpdateModal onUpdateModal={this.props.onUpdateModal} el={this.props.el}/>
                 case 'add' :
                     return <AddNewProductModal onAddProductModal={this.props.onAddProductModal}
                                                onNoProductModal={this.props.onNoProductModal}/>
+                case 'color' :
+                    return <ColorSite  onAddPColorModal={this.props.onAddPColorModal}
+                                       onNoColorModal={this.props.onNoColorModal}/>
 
                 default:
                     return '';
@@ -37,7 +41,9 @@ class Modal extends React.Component {
 
             <div>
 
-                <div className={classes.wrapper} onClick={this.onModal}>
+                <div className={classes.wrapper}
+                     // onClick={this.onModal}
+                >
                     <div className={classes.simplemodal}>
                         {modal()}
 

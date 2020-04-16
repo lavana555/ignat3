@@ -1,0 +1,21 @@
+{
+
+
+  "app.language": "Language   ",
+  "app.showHeader": "SHOW HEADER",
+  "app.CoverHeader": "COVER HEADER",
+  "app.sig-in": "sig-in",
+  "app.register": "register",
+  "app.forgot": "forgot",
+  "app.modals": "modals",
+  "app.time": "time",
+  "app.color": "color",
+  "app.shop-table": "shop-table",
+  "app.shop-basket":"shop-basket",
+  "'users.SHOWUSERS": "SHOW USERS",
+  "users.COVERUSERS": "COVER USERS"
+
+
+
+
+}

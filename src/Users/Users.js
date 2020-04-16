@@ -3,6 +3,7 @@ import {getTodolistsTC} from "./UsersReducers";
 import {connect} from "react-redux";
 import User from "./User";
 import classes from './Users.module.css'
+import {FormattedMessage} from "react-intl";
 
 class Users extends React.Component {
 
@@ -25,13 +26,21 @@ class Users extends React.Component {
         return (
             <div>
                 {!this.state.flag &&
-                <div className={classes.btn} onClick={this.showMeUsers}>SHOW USERS</div>
+                <div className={classes.btn} onClick={this.showMeUsers}>
+                    <FormattedMessage id={'users.SHOWUSERS'}
+                                      defaultMessage={'SHOW USERS'}/>
+
+
+                </div>
                 }
                 {this.props.loading ? <div style={{color: "red"}}>Loading...</div> : null}
                 {this.state.flag &&
                 // <div className={classes.btn} onClick={this.showMeUsers}>COVER USERS</div>
                 <div className={classes.container}>
-                    <div className={classes.btn} onClick={this.showMeUsers}>COVER USERS</div>
+                    <div className={classes.btn} onClick={this.showMeUsers}>
+                        <FormattedMessage id={'users.COVERUSERS'}
+                                          defaultMessage={'COVER USERS'}/>
+                    </div>
                     <div className={classes.items}>
                         {UsersEl}
 
@@ -48,7 +57,7 @@ class Users extends React.Component {
 const mapStateToProps = (state) => {
     return {
         users: state.US.users,
-        loading:state.US.loading
+        loading: state.US.loading
     }
 }
 

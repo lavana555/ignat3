@@ -1,0 +1,20 @@
+{
+
+  "app.language": "Язык   ",
+  "app.showHeader": "Показать Заголовок",
+  "app.CoverHeader": "Скрыть Заголовок",
+  "app.sig-in": "войти",
+  "app.register": "регистрация",
+  "app.forgot": "забыл пароль",
+  "app.modals": "модалки",
+  "app.time": "время",
+  "app.color": "цвет",
+  "app.shop-table": "таблица-покупок",
+  "app.shop-basket":"корзина покупок",
+
+
+  "users.SHOWUSERS": "Показать Пользователей",
+  "users.COVERUSERS": "Скрыть Пользователй"
+
+
+}
