@@ -54,10 +54,6 @@ const ShopTableContainer=()=>{
 
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> b346a733f757be6091764bfa3c6d2fd94eb86b64
     let   arr1: Array<ITableModel> = [
         {
             title: () => <div

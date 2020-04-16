@@ -12,16 +12,16 @@ import Color from './Color/Color';
 import ShopBasketContainer from "./ShopBasket/ShopBasketContainer";
 import ShopTableContainer from "./ShopTable/ShopTableContainer";
 import BuyMaS from "./buyModalsAndSettingsCopy/buyMaS";
-<<<<<<< HEAD
+
 import {FormattedMessage, IntlProvider} from "react-intl";
 import {Switch} from "antd";
 // @ts-ignore
 import messages_ru from "./buyModalsAndSettingsCopy/i18next/ru";
 // @ts-ignore
 import messages_en from "./buyModalsAndSettingsCopy/i18next/en";
-=======
+
 //import SeparateSearch from "./Search/reserve";
->>>>>>> b346a733f757be6091764bfa3c6d2fd94eb86b64
+
 
 import 'antd/dist/antd.css';
 import BuyMaColor from "./buyModalsAndSettingsCopy/buyMaColor";
@@ -78,7 +78,7 @@ class App extends React.Component {
         return (
             <BrowserRouter>
                 <div className="App">
-<<<<<<< HEAD
+
                     <BuyMaColor />
                     <IntlProvider locale={this.state.currentLocal}
                                   messages={this.state.messages[this.state.currentLocal]}>
@@ -166,47 +166,47 @@ class App extends React.Component {
                         {/*<Route exact path='/SignIN' component={SignIN}/>*/}
                         <Users/>
                     </IntlProvider>
-=======
-                    <div className="header">
-                        {!this.state.flag &&
-                            <div className="headerbtn" onClick={this.showHedaer}>SHOW HEADER</div>
-                        }
-                        {this.state.flag &&
 
-                      <>
-                          <div className="headerbtn" onClick={this.showHedaer}>COVER HEADER</div>
-                          <ul className="nav">
-                            <li><Link to="login">sig-in</Link></li>
-                            <li><Link to="registration">register</Link></li>
-                            <li><Link to="forgot">forgot</Link></li>
-                            <li><Link to="modals">modals</Link></li>
-                            <li><Link to="time">time</Link></li>
-                            <li><Link to="color">color</Link></li>
-                            <li><Link to="shop-table">shop-table</Link></li>
-                            <li><Link to="shop-basket">shop-basket</Link></li>
-                            <li><Link to="buyMas">buyMas</Link></li>
-                            {/*<li><Link to="search">search</Link></li>*/}
-                        </ul>
+                    {/*<div className="header">*/}
+                    {/*    {!this.state.flag &&*/}
+                    {/*        <div className="headerbtn" onClick={this.showHedaer}>SHOW HEADER</div>*/}
+                    {/*    }*/}
+                    {/*    {this.state.flag &&*/}
 
-                      </>
-                        }
-                        <Route exact path='/registration' component={Registration}/>
-                        <Route exact path='/forgot/' component={WithRouterRecoveryPassContainer}/>
-                        <Route exact path='/reset-password/:token' component={WithRouterNewPassContainer}/>
-                        <Route exact path='/login/' component={Loginization}/>
-                        <Route exact path='/time/' component={Time}/>
-                        <Route exact path='/authme/' component={AuthMe}/>
-                        <Route exact path='/color/' component={Color}/>
-                        <Route exact path='/shop-table/' component={ShopTableContainer}/>
-                        <Route exact path='/shop-basket/' component={ShopBasketContainer}/>
-                        <Route exact path='/buyMas/' component={BuyMaS}/>
-                        {/*<Route exact path='/search/' component={SeparateSearch}/>*/}
+                    {/*  <>*/}
+                    {/*      <div className="headerbtn" onClick={this.showHedaer}>COVER HEADER</div>*/}
+                    {/*      <ul className="nav">*/}
+                    {/*        <li><Link to="login">sig-in</Link></li>*/}
+                    {/*        <li><Link to="registration">register</Link></li>*/}
+                    {/*        <li><Link to="forgot">forgot</Link></li>*/}
+                    {/*        <li><Link to="modals">modals</Link></li>*/}
+                    {/*        <li><Link to="time">time</Link></li>*/}
+                    {/*        <li><Link to="color">color</Link></li>*/}
+                    {/*        <li><Link to="shop-table">shop-table</Link></li>*/}
+                    {/*        <li><Link to="shop-basket">shop-basket</Link></li>*/}
+                    {/*        <li><Link to="buyMas">buyMas</Link></li>*/}
+                    {/*        /!*<li><Link to="search">search</Link></li>*!/*/}
+                    {/*    </ul>*/}
 
-                    </div>
+                    {/*  </>*/}
+                    {/*    }*/}
+                    {/*    <Route exact path='/registration' component={Registration}/>*/}
+                    {/*    <Route exact path='/forgot/' component={WithRouterRecoveryPassContainer}/>*/}
+                    {/*    <Route exact path='/reset-password/:token' component={WithRouterNewPassContainer}/>*/}
+                    {/*    <Route exact path='/login/' component={Loginization}/>*/}
+                    {/*    <Route exact path='/time/' component={Time}/>*/}
+                    {/*    <Route exact path='/authme/' component={AuthMe}/>*/}
+                    {/*    <Route exact path='/color/' component={Color}/>*/}
+                    {/*    <Route exact path='/shop-table/' component={ShopTableContainer}/>*/}
+                    {/*    <Route exact path='/shop-basket/' component={ShopBasketContainer}/>*/}
+                    {/*    <Route exact path='/buyMas/' component={BuyMaS}/>*/}
+                    {/*    /!*<Route exact path='/search/' component={SeparateSearch}/>*!/*/}
+
+                    {/*</div>*/}
 
                     {/*<Route exact path='/SignIN' component={SignIN}/>*/}
-<Users />
->>>>>>> b346a733f757be6091764bfa3c6d2fd94eb86b64
+{/*<Users />*/}
+
                     {/*<Registration/>*/}
                     {/*<RecoveryPassContainer/>*/}
                 </div>

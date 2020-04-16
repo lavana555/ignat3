@@ -20,11 +20,10 @@ const rootReducer = combineReducers({
     BL:booleanReducer,
     shop:shopTableReducer,
     basket:shopBasketReducer,
-<<<<<<< HEAD
     color:colorReducer
-=======
+
     // search: searchReducer
->>>>>>> b346a733f757be6091764bfa3c6d2fd94eb86b64
+
     // profile:profileReducer
 })
 
