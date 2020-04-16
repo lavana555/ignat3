@@ -10,6 +10,7 @@ import BuyMaSadd from "../buyModalsAndSettingsCopy/buyMaSadd";
 
 import Search from "../Search/Search";
 import Paginator from "../pagination/Paginator";
+import {Redirect} from "react-router";
 
 
 const ShopTableContainer=()=>{
@@ -51,7 +52,12 @@ const ShopTableContainer=()=>{
         dispatch(getProducts(page, pageCount));
     };
 
-
+const onPageProduct=()=>{
+    return
+    alert('yo')
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  // <Redirect to={'/pageproduct'}/>
+}
 
 
     let   arr1: Array<ITableModel> = [
@@ -59,7 +65,7 @@ const ShopTableContainer=()=>{
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
             render: (el: ProductType, index) => {
-                return <div key={index} style={{width: "60%", textAlign: "start"}}>{el.productName}</div>
+                return <div key={index} style={{width: "60%", textAlign: "start"}}   onClick={()=><Redirect to={'/pageproduct'}/>} >{el.productName}</div>
             }
         },
         {
@@ -79,12 +85,30 @@ const ShopTableContainer=()=>{
                 return <div key={index} style={{width: "25%", textAlign: "start"}}>{el.price}</div>
             }
         },
+
+        {
+            title: () => <div style={{width: "25%", display: "flex", alignItems: "center", textAlign: "start"}}>
+                Count Stars
+
+            </div>,
+            render: (el: ProductType, index) => {
+                return <div key={index} style={{width: "13%", textAlign: "start"}}>{el.rating}</div>
+            }
+        },
+
+
+
+
+
         {
             title: () => <div style={{width: "15%", textAlign: "start"}}>
                 {/*<button onClick={addPr}>Add</button>*/}
               <BuyMaSadd
                    addPr={addPr}
               />
+
+
+
             </div>,
             render: (el: ProductType, index) => {
                 return <ProductOptions el={el}

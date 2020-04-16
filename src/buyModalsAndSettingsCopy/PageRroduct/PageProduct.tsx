@@ -1,12 +1,14 @@
 import React  from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import { delFromBasket} from "./bll/shopBasketReducer";
-import {ProductType} from "../ShopTable/dal/apiShopTable";
-import ShopTable, { ITableModel } from '../ShopTable/ShopTable';
-import {AppStateType} from "../store";
+//import {ITableModel} from "../../ShopTable/ShopTable";
+import {AppStateType} from "../../store";
+import ShopTable,{ ITableModel } from '../../ShopTable/ShopTable';
+import {ProductType} from "../../ShopTable/dal/apiShopTable";
+import {delFromBasket} from "../../ShopBasket/bll/shopBasketReducer";
 
 
-const ShopBasketContainer =()=>{
+
+const PageProduct =()=>{
     const dispatch = useDispatch();
     const products = useSelector((state:AppStateType) => state.basket.products);
     let arr1: Array<ITableModel> = [
@@ -14,7 +16,7 @@ const ShopBasketContainer =()=>{
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
             render: (el: ProductType, index) => {
-                return <div key={index} style={{width: "60%", textAlign: "start"}}  onClick={()=>alert(el.productName)}>{el.productName}</div>
+                return <div key={index} style={{width: "60%", textAlign: "start"}}>{el.productName}</div>
             }
         },
         {
@@ -55,4 +57,4 @@ const ShopBasketContainer =()=>{
 }
 
 
-export default ShopBasketContainer
+export default PageProduct

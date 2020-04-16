@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {apiShopTable} from "../ShopTable/dal/apiShopTable";
+import {api} from "./Api";
 
 
 
@@ -46,3 +47,7 @@ export const addNewColorBG = (colorbg:any,colorbtn:any) =>  (dispatch: Dispatch)
 
 
 
+export const addOrder = (order:any) => async (dispatch: Dispatch) => {
+    let answer = await api.shopBuyApi(order)
+  //  dispatch(addOrderSuccess(answer))
+};
