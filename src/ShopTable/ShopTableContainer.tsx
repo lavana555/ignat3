@@ -3,10 +3,10 @@ import ShopTable, {ITableModel} from "./ShopTable";
 import {useDispatch, useSelector} from "react-redux";
 import ProductOptions from './ProductOptions/ProductOptions';
 import {ProductType} from "./dal/apiShopTable";
-import {addProduct, delProduct, getProducts, updateProduct} from "./bll/shopTableReducer";
+import {addProduct, delProduct, findProductC, getProducts, updateProduct} from "./bll/shopTableReducer";
 import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
 import {AppStateType} from "../store";
-import {findProductC} from "../Search/SearchReducer";
+
 import Search from "../Search/Search";
 import Paginator from "../pagination/Paginator";
 
