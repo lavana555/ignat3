@@ -26,6 +26,7 @@ import messages_en from "./buyModalsAndSettingsCopy/i18next/en";
 import 'antd/dist/antd.css';
 import BuyMaColor from "./buyModalsAndSettingsCopy/buyMaColor";
 import PageProduct from "./buyModalsAndSettingsCopy/PageRroduct/PageProduct";
+import FilePage from './File/FilePage';
 
 
 const LANGUAGES = {
@@ -147,6 +148,7 @@ class App extends React.Component {
                                                           defaultMessage={'shop-basket'}/>
                                     </Link></li>
                                     <li><Link to="buyMas">buyMas</Link></li>
+                                    <li><Link to="file">file</Link></li>
                                 </ul>
 
                             </>
@@ -162,6 +164,7 @@ class App extends React.Component {
                             <Route exact path='/shop-basket/' component={ShopBasketContainer}/>
                             <Route exact path='/buyMas/' component={BuyMaS}/>
                             <Route exact path='/pageproduct/' component={PageProduct}/>
+                            <Route exact path='/file/' component={FilePage}/>
 
                         </div>
 
