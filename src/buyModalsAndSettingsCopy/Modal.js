@@ -5,6 +5,7 @@ import DeleteModal from "./DeleteModal";
 import UpdateModal from "./UpdateModal";
 import AddNewProductModal from "./AddNewProductModal";
 import ColorSite from "./Color";
+import SearchModal from "../Search/SearchModal";
 
 
 class Modal extends React.Component {

@@ -7,14 +7,15 @@ import {
     addProduct,
     delProduct,
     getProducts,
-    updateProduct, getFilteredProducts
+    updateProduct, findProducts, addSortingProduct, setEmptyProductList
 } from "./bll/shopTableReducer";
 import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
 import {AppStateType} from "../store";
 import BuyMaSadd from "../buyModalsAndSettingsCopy/buyMaSadd";
-
 import Search from "../Search/Search";
 import Paginator from "../pagination/Paginator";
+
+
 
 
 const ShopTableContainer = () => {
@@ -23,9 +24,9 @@ const ShopTableContainer = () => {
     const pageCount = useSelector((state: AppStateType) => state.shop.pageCount);
     const currentPage = useSelector((state: AppStateType) => state.shop.currentPage);
 
+
     const dispatch = useDispatch();
-    useEffect((page = 1, pageCount = 5) => {
-        debugger
+    useEffect((page = 1, pageCount = 7) => {
         dispatch(getProducts(page, pageCount))
     }, []);
 
@@ -52,8 +53,17 @@ const ShopTableContainer = () => {
         dispatch(getProducts(page, pageCount));
     };
     const searchProduct= (value: string) => {
-        dispatch(getFilteredProducts(value));
+        dispatch(findProducts(value));
     };
+
+
+
+    // const sortAscProduct = (index: number) => {
+    //     dispatch(addSortingProduct(1));
+    // };
+    // const sortDescProduct=(index: number) => {
+    //     dispatch(addSortingProduct(0));
+    // };
 
 
     let arr1: Array<ITableModel> = [
@@ -73,8 +83,8 @@ const ShopTableContainer = () => {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <button>/\</button>
-                    <button>\/</button>
+                    <button onClick={()=>{dispatch(addSortingProduct(1))}}>/\</button>
+                    <button onClick={()=>{dispatch(addSortingProduct(0))}} >\/</button>
                 </div>
             </div>,
             render: (el: ProductType, index) => {
@@ -100,7 +110,8 @@ const ShopTableContainer = () => {
     return (
         <div>
 
-            <Search searchProduct={searchProduct}/>
+            <Search searchProduct={searchProduct} products={products}/>
+
             <ShopTable model={arr1} data={products}/>
             <Paginator productCount={productCount}
                        onPageChanged={onCurrentPageChanged}

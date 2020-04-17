@@ -55,5 +55,8 @@ export const apiShopTable = {
     },
     updateProduct(productName:string,price:number,id: string) {
         return instance.put<UpdatedProductResponseType>(``,{product:{productName:productName,price:price,id:id}}).then((res) => res.data)
+    },
+    sortProduct(index: number) {
+        return instance.get<GetProductsResponseType>(`?sortProducts=${index}price`).then((res) => res.data.products)
     }
 }
