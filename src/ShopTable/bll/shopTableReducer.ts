@@ -14,7 +14,7 @@ const initialState = {
     products: [] as Array<ProductType>,
     productTotalCount: 0 as number,
     currentPage: 1 as number,
-    pageCount: 5 as number
+    pageCount: 7 as number
 };
 
 type InitialStateType = typeof initialState
@@ -105,9 +105,13 @@ export const getProducts = (page: number, pageCount: number) => async (dispatch:
     dispatch(getProductsSuccess(data.products));
     dispatch(setProductTotalCount(data.productTotalCount))
 };
-export const getFilteredProducts = (product: string) => async (dispatch: Dispatch) => {
+export const findProducts = (product: string) => async (dispatch: Dispatch) => {
     let data = await apiShopTable.getFilteredProducts(product);
     dispatch(getProductsSuccess(data.products))
+};
+export const addSortingProduct = (index: number) => async (dispatch: Dispatch) => {
+    let sortProduct = await apiShopTable.sortProduct(index);
+    dispatch(getProductsSuccess(sortProduct))
 };
 
 export const addProduct = (productName: string, price: number, productType: string) => async (dispatch: Dispatch) => {
