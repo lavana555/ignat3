@@ -5,12 +5,23 @@ import {AppStateType} from "../../store";
 import ShopTable,{ ITableModel } from '../../ShopTable/ShopTable';
 import {ProductType} from "../../ShopTable/dal/apiShopTable";
 import {delFromBasket} from "../../ShopBasket/bll/shopBasketReducer";
+import { useHistory } from 'react-router-dom';
 
 
 
 const PageProduct =()=>{
     const dispatch = useDispatch();
-    const products = useSelector((state:AppStateType) => state.basket.products);
+    const products = useSelector((state:AppStateType) => state.product.products);
+    const history = useHistory();
+
+
+  const  goBack=()=>{
+        history.goBack();
+    }
+
+
+
+
     let arr1: Array<ITableModel> = [
         {
             title: () => <div
@@ -42,7 +53,7 @@ const PageProduct =()=>{
             </div>,
             render: (el: ProductType, index) => {
                 return <div style={{width: "15%", textAlign: "start"}}>
-                    <button onClick={()=>dispatch(delFromBasket(el.id))}>Delete</button>
+                    <button onClick={goBack}>Go Back</button>
                 </div>
             }
         }

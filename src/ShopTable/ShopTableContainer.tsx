@@ -11,6 +11,8 @@ import BuyMaSadd from "../buyModalsAndSettingsCopy/buyMaSadd";
 import Search from "../Search/Search";
 import Paginator from "../pagination/Paginator";
 import {Redirect} from "react-router";
+import { useHistory } from 'react-router-dom';
+import { addToPageProduct } from '../buyModalsAndSettingsCopy/PageRroduct/PageProductReducer';
 
 
 const ShopTableContainer=()=>{
@@ -20,6 +22,7 @@ const ShopTableContainer=()=>{
     const currentPage = useSelector((state:AppStateType) => state.shop.currentPage);
 
     const dispatch = useDispatch();
+    const history = useHistory();
     useEffect( (page = 1, pageCount = 5)=>{
         debugger
         dispatch(getProducts(page, pageCount))
@@ -52,11 +55,15 @@ const ShopTableContainer=()=>{
         dispatch(getProducts(page, pageCount));
     };
 
-const onPageProduct=()=>{
-    return
-    alert('yo')
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  // <Redirect to={'/pageproduct'}/>
+const onPageProduct=(e:any)=>{
+    debugger
+   // console.log(el)
+  //  alert(e.target.innerText)
+ //   alert(e)
+//alert(el)
+    dispatch(addToPageProduct(e))
+    history.push('/pageproduct')
+
 }
 
 
@@ -65,7 +72,8 @@ const onPageProduct=()=>{
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
             render: (el: ProductType, index) => {
-                return <div key={index} style={{width: "60%", textAlign: "start"}}   onClick={()=><Redirect to={'/pageproduct'}/>} >{el.productName}</div>
+
+                return <div key={index} style={{width: "60%", textAlign: "start"}}    onClick={ (e)=>{onPageProduct(el)}}    >{el.productName}</div>
             }
         },
         {

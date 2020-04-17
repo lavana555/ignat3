@@ -9,6 +9,7 @@ import {booleanReducer} from "./booleanReducer/booleanReducer";
 import {shopTableReducer} from "./ShopTable/bll/shopTableReducer";
 import {shopBasketReducer} from "./ShopBasket/bll/shopBasketReducer";
 import {colorReducer} from "./buyModalsAndSettingsCopy/shopTableReducer";
+import {pageRroductReducer} from "./buyModalsAndSettingsCopy/PageRroduct/PageProductReducer";
 
 
 const rootReducer = combineReducers({
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     BL:booleanReducer,
     shop:shopTableReducer,
     basket:shopBasketReducer,
-    color:colorReducer
+    color:colorReducer,
+    product:pageRroductReducer
 
     // search: searchReducer
 
