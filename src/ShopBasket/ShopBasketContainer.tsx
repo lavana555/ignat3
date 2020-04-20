@@ -35,7 +35,7 @@ const ShopBasketContainer =()=>{
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
             render: (el: ProductType, index) => {
-                return <div key={index} style={{width: "60%", textAlign: "start"}}>{el.productName}</div>
+                return <div key={index} style={{width: "60%", textAlign: "start"}}  >{el.productName}</div>
             }
         },
         {

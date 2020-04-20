@@ -23,10 +23,10 @@ class Star extends React.Component {
         return (
 
             <div >
-                {this.state.flag &&
+                {!this.state.flag &&
                 <div className={classes.star} onClick={this.onStarClick}></div>
                 }
-                {!this.state.flag &&
+                {this.state.flag &&
                     <div className={classes.starEmpty} onClick={this.onStarClick}></div>
                 }
             </div>

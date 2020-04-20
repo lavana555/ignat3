@@ -79,13 +79,13 @@ const ShopTable: React.FC<ITableProps> = (
                 style={{
                     border: '1px solid lime',
                     width: '100%',
-                    background:'#fff',
+                    background:'#5ede3e',
                     ...rowsStyle,
                 }}
             >
                 {data.map((dataItem: any, dataIndex: number) => (
                     <div
-
+                        // onClick={()=>alert(dataItem.productName)}
                         key={dataItem.id || dataIndex}
                         style={{
                             width: '100%',
@@ -93,11 +93,12 @@ const ShopTable: React.FC<ITableProps> = (
                             flexFlow: 'row',
                             alignItems: 'center',
                             justifyContent: 'center',
+                            background:'#de3ed9',
                             ...rowStyle,
                         }}
                     >
                         {model.map((m, modelIndex) => m.render(dataItem, modelIndex, dataIndex))}
-<Stars />
+<Stars count={dataItem.rating} />
                     </div>
                 ))}
             </div>
