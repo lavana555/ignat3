@@ -3,33 +3,47 @@ import ShopTable, {ITableModel} from "./ShopTable";
 import {useDispatch, useSelector} from "react-redux";
 import ProductOptions from './ProductOptions/ProductOptions';
 import {ProductType} from "./dal/apiShopTable";
-import {addProduct, delProduct, findProductC, getProducts, updateProduct} from "./bll/shopTableReducer";
+import {
+    addProduct,
+    addSortingProduct,
+    delProduct,
+    findProducts,
+    getProducts, setPriceRangeValues,
+    updateProduct
+} from "./bll/shopTableReducer";
 import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
 import {AppStateType} from "../store";
 import BuyMaSadd from "../buyModalsAndSettingsCopy/buyMaSadd";
 
 import Search from "../Search/Search";
 import Paginator from "../pagination/Paginator";
-import {Redirect} from "react-router";
-import { useHistory } from 'react-router-dom';
-import { addToPageProduct } from '../buyModalsAndSettingsCopy/PageRroduct/PageProductReducer';
+import PriceRange from "../PriceRange";
+import SearchModal from "../Search/SearchModal";
+import {useHistory} from 'react-router-dom';
+import {addToPageProduct} from "../buyModalsAndSettingsCopy/PageRroduct/PageProductReducer";
 
 
-const ShopTableContainer=()=>{
-    const products = useSelector((state:AppStateType) => state.shop.products);
-    const productCount = useSelector((state:AppStateType) => state.shop.productTotalCount);
-    const pageCount = useSelector((state:AppStateType) => state.shop.pageCount);
-    const currentPage = useSelector((state:AppStateType) => state.shop.currentPage);
+const ShopTableContainer = () => {
+    const products = useSelector((state: AppStateType) => state.shop.products);
+    const productCount = useSelector((state: AppStateType) => state.shop.productTotalCount);
+    const pageCount = useSelector((state: AppStateType) => state.shop.pageCount);
+    const currentPage = useSelector((state: AppStateType) => state.shop.currentPage);
+    const [showModal, setShowModal] = useState(false);
 
     const dispatch = useDispatch();
-    const history = useHistory();
-    useEffect( (page = 1, pageCount = 5)=>{
-        debugger
-        dispatch(getProducts(page, pageCount))
-    },[]);
+    useEffect((page = 1, pageCount = 7) => {
+        debugger;
+        dispatch(getProducts(page, pageCount));
+    }, []);
 
-    const addPr = useCallback((productName:any, price:any) => {
-      // let productName = "testKMB23-1";
+    const history = useHistory();
+    useEffect((page = 1, pageCount = 7) => {
+        debugger;
+        dispatch(getProducts(page, pageCount));
+    }, []);
+
+    const addPr = useCallback((productName: any, price: any) => {
+        // let productName = "testKMB23-1";
         //let price = 5000;
         let productType = "gold";
         dispatch(addProduct(productName, price, productType));
@@ -47,33 +61,46 @@ const ShopTableContainer=()=>{
     }, []);
 
 
-    const searchProduct= useCallback((value: string) => {
-        dispatch(findProductC(value));
-    }, []) ;
-
-  const onPageChanged= (page: number) => {
+    const onCurrentPageChanged = (page: number) => {
         dispatch(getProducts(page, pageCount));
     };
+    const searchProduct = (value: string) => {
+        const prods = findProducts(value);
+        // @ts-ignore
+        dispatch(prods).then(res => {
+            setShowModal(res.length === 0);
+        });
+    };
+    const closeModal = () => {
+        setShowModal(false);
+    };
 
-const onPageProduct=(e:any)=>{
-    debugger
-   // console.log(el)
-  //  alert(e.target.innerText)
- //   alert(e)
+    const setRangeValues = (values: number[]) => {
+        debugger;
+        dispatch(setPriceRangeValues(values));
+    };
+
+    const onPageProduct = (e: any) => {
+        // console.log(el)
+        //  alert(e.target.innerText)
+        //   alert(e)
 //alert(el)
-    dispatch(addToPageProduct(e))
-    history.push('/pageproduct')
+        dispatch(addToPageProduct(e));
+        history.push('/pageproduct');
 
-}
+    };
 
 
-    let   arr1: Array<ITableModel> = [
+    let arr1: Array<ITableModel> = [
         {
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
             render: (el: ProductType, index) => {
+                return <div key={index} style={{width: "60%", textAlign: "start"}}>{el.productName}</div>;
 
-                return <div key={index} style={{width: "60%", textAlign: "start"}}    onClick={ (e)=>{onPageProduct(el)}}    >{el.productName}</div>
+                return <div key={index} style={{width: "60%", textAlign: "start"}} onClick={(e) => {
+                    onPageProduct(el);
+                }}>{el.productName}</div>;
             }
         },
         {
@@ -85,59 +112,51 @@ const onPageProduct=(e:any)=>{
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <button>/\</button>
-                    <button>\/</button>
+                    <button onClick={() => {
+                        dispatch(addSortingProduct(1));
+                    }}>/\
+                    </button>
+                    <button onClick={() => {
+                        dispatch(addSortingProduct(0));
+                    }}>\/
+                    </button>
                 </div>
             </div>,
             render: (el: ProductType, index) => {
-                return <div key={index} style={{width: "25%", textAlign: "start"}}>{el.price}</div>
+                return <div key={index} style={{width: "25%", textAlign: "start"}}>{el.price}</div>;
             }
         },
-
-        {
-            title: () => <div style={{width: "25%", display: "flex", alignItems: "center", textAlign: "start"}}>
-                Count Stars
-
-            </div>,
-            render: (el: ProductType, index) => {
-                return <div key={index} style={{width: "13%", textAlign: "start"}}>{el.rating}</div>
-            }
-        },
-
-
-
-
-
         {
             title: () => <div style={{width: "15%", textAlign: "start"}}>
                 {/*<button onClick={addPr}>Add</button>*/}
-              <BuyMaSadd
-                   addPr={addPr}
-              />
-
-
-
+                <BuyMaSadd
+                    addPr={addPr}
+                />
             </div>,
             render: (el: ProductType, index) => {
                 return <ProductOptions el={el}
                                        delProduct={deleteProduct}
                                        updateProduct={updatePr}
-                                       addToBasket={addToBask}/>
+                                       addToBasket={addToBask}/>;
             }
         }
     ];
 
-        return (
-            <div>
-
-                <Search searchProduct = {searchProduct}/>
-                <ShopTable model={arr1} data={products}/>
-                <Paginator productCount = {productCount}
-                           onPageChanged = {onPageChanged}
-                           currentPage ={currentPage}/>
+    return (
+        <div>
+            <div style={{display: "flex", marginTop: "20px", justifyContent: "center"}}>
+                <PriceRange setRangeValues={setRangeValues}/>
+                <Search searchProduct={searchProduct} products={products}/>
+                {showModal &&
+                <SearchModal closeModal={closeModal}/>}
             </div>
-        );
+            <ShopTable model={arr1} data={products}/>
+            <Paginator productCount={productCount}
+                       onPageChanged={onCurrentPageChanged}
+                       currentPage={currentPage}/>
+        </div>
+    );
 
-}
+};
 
-export default ShopTableContainer
+export default ShopTableContainer;
