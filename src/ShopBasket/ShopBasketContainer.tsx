@@ -1,12 +1,12 @@
-import React  from 'react';
+import React, {useCallback} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {delFromBasket, getFilteredBasket} from "./bll/shopBasketReducer";
+import {addSortingBasket, delFromBasket, getFilteredBasket} from "./bll/shopBasketReducer";
 import {ProductType} from "../ShopTable/dal/apiShopTable";
 import ShopTable, { ITableModel } from '../ShopTable/ShopTable';
 import {AppStateType} from "../store";
 import Search from "../Search/Search";
 import Paginator from "../pagination/Paginator";
-import {getProducts} from "../ShopTable/bll/shopTableReducer";
+
 
 
 
@@ -22,6 +22,14 @@ const ShopBasketContainer =()=>{
     const onCurrentPageChanged = (page: number) => {
         //dispatch(getProducts(page, pageCount=5));
     };
+
+    // const addSortingProduct = (index: number) => {
+    //     dispatch(addSortingBasket(index));
+    // };
+    const addSortingProduct = (index: number) => {
+        alert(index);
+    };
+
     let arr1: Array<ITableModel> = [
         {
             title: () => <div
@@ -39,8 +47,8 @@ const ShopBasketContainer =()=>{
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <button>/\</button>
-                    <button>\/</button>
+                    <button onClick={()=>{addSortingProduct(1)}}>/\</button>
+                    <button onClick={()=>{addSortingProduct(0)}}>\/</button>
                 </div>
             </div>,
             render: (el: ProductType, index) => {

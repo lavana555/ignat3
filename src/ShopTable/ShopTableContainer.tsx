@@ -7,15 +7,15 @@ import {
     addProduct,
     delProduct,
     getProducts,
-    updateProduct, findProducts, addSortingProduct, setEmptyProductList
+    updateProduct, findProducts, addSortingProduct, setPriceRangeValues
 } from "./bll/shopTableReducer";
 import {addToBasket} from "../ShopBasket/bll/shopBasketReducer";
 import {AppStateType} from "../store";
 import BuyMaSadd from "../buyModalsAndSettingsCopy/buyMaSadd";
 import Search from "../Search/Search";
 import Paginator from "../pagination/Paginator";
-
-
+import PriceRange from "../PriceRange";
+import SearchModal from "../Search/SearchModal";
 
 
 const ShopTableContainer = () => {
@@ -23,11 +23,12 @@ const ShopTableContainer = () => {
     const productCount = useSelector((state: AppStateType) => state.shop.productTotalCount);
     const pageCount = useSelector((state: AppStateType) => state.shop.pageCount);
     const currentPage = useSelector((state: AppStateType) => state.shop.currentPage);
+    const [showModal, setShowModal] = useState(false);
 
 
     const dispatch = useDispatch();
     useEffect((page = 1, pageCount = 7) => {
-        dispatch(getProducts(page, pageCount))
+        dispatch(getProducts(page, pageCount));
     }, []);
 
     const addPr = useCallback((productName: any, price: any) => {
@@ -48,15 +49,24 @@ const ShopTableContainer = () => {
         dispatch(addToBasket(product));
     }, []);
 
-
     const onCurrentPageChanged = (page: number) => {
         dispatch(getProducts(page, pageCount));
     };
-    const searchProduct= (value: string) => {
-        dispatch(findProducts(value));
+    const searchProduct = (value: string) => {
+        const prods = findProducts(value);
+        // @ts-ignore
+        dispatch(prods).then(res => {
+            setShowModal(res.length === 0);
+        });
+    };
+    const closeModal = () => {
+        setShowModal(false);
     };
 
-
+    const setRangeValues = (values: number[]) => {
+        debugger;
+        dispatch(setPriceRangeValues(values));
+    };
 
     // const sortAscProduct = (index: number) => {
     //     dispatch(addSortingProduct(1));
@@ -71,7 +81,7 @@ const ShopTableContainer = () => {
             title: () => <div
                 style={{width: "60%", display: "flex", alignItems: "center", textAlign: "start"}}>Product</div>,
             render: (el: ProductType, index) => {
-                return <div key={index} style={{width: "60%", textAlign: "start"}}>{el.productName}</div>
+                return <div key={index} style={{width: "60%", textAlign: "start"}}>{el.productName}</div>;
             }
         },
         {
@@ -83,12 +93,18 @@ const ShopTableContainer = () => {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <button onClick={()=>{dispatch(addSortingProduct(1))}}>/\</button>
-                    <button onClick={()=>{dispatch(addSortingProduct(0))}} >\/</button>
+                    <button onClick={() => {
+                        dispatch(addSortingProduct(1));
+                    }}>/\
+                    </button>
+                    <button onClick={() => {
+                        dispatch(addSortingProduct(0));
+                    }}>\/
+                    </button>
                 </div>
             </div>,
             render: (el: ProductType, index) => {
-                return <div key={index} style={{width: "25%", textAlign: "start"}}>{el.price}</div>
+                return <div key={index} style={{width: "25%", textAlign: "start"}}>{el.price}</div>;
             }
         },
         {
@@ -102,15 +118,19 @@ const ShopTableContainer = () => {
                 return <ProductOptions el={el}
                                        delProduct={deleteProduct}
                                        updateProduct={updatePr}
-                                       addToBasket={addToBask}/>
+                                       addToBasket={addToBask}/>;
             }
         }
     ];
 
     return (
         <div>
-
-            <Search searchProduct={searchProduct} products={products}/>
+            <div style={{display: "flex", marginTop: "20px", justifyContent: "center"}}>
+                <PriceRange setRangeValues={setRangeValues}/>
+                <Search searchProduct={searchProduct} products={products}/>
+                {showModal &&
+                <SearchModal closeModal={closeModal}/>}
+            </div>
 
             <ShopTable model={arr1} data={products}/>
             <Paginator productCount={productCount}
@@ -119,6 +139,6 @@ const ShopTableContainer = () => {
         </div>
     );
 
-}
+};
 
-export default ShopTableContainer
+export default ShopTableContainer;

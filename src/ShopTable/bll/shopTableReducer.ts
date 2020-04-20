@@ -8,7 +8,7 @@ const DELETE_PRODUCT = 'app/shopTableReducer/DELETE_PRODUCT';
 const UPDATE_PRODUCT = 'app/shopTableReducer/UPDATE_PRODUCT';
 const GET_PRODUCT_COUNT = 'app/shopTableReducer/GET_PRODUCT_COUNT';
 const SET_PRODUCT_PAGE = 'app/shopTableReducer/SET_PRODUCT_PAGE';
-const CHECK_EMPTY_SEARCH = 'app/shopTableReducer/CHECK_EMPTY_SEARCH';
+const SET_PRICE_RANGE = 'app/shopTableReducer/SET_PRICE_RANGE';
 
 
 const initialState = {
@@ -16,18 +16,19 @@ const initialState = {
     productTotalCount: 0,
     currentPage: 1,
     pageCount: 7,
-    isEmptyList: false
+    priceRange: [500, 9000] as number[]
 };
 
 type InitialStateType = typeof initialState
 
 export const shopTableReducer = (state = initialState, action: shopTableActionType): InitialStateType => {
-
+debugger;
     switch (action.type) {
         case  GET_PRODUCTS:
             return {
                 ...state,
                 products: action.products
+                  // .filter(p => p.price >= state.priceRange[0] && p.price <= state.priceRange[1] )
             };
         case  ADD_PRODUCT:
             return {
@@ -44,9 +45,9 @@ export const shopTableReducer = (state = initialState, action: shopTableActionTy
                 ...state,
                 products: state.products.map(product => {
                         if (product.id === action.id) {
-                            return {...product, productName: action.productName, price: action.price}
+                            return {...product, productName: action.productName, price: action.price};
                         } else {
-                            return product
+                            return product;
                         }
                     }
                 )
@@ -61,13 +62,13 @@ export const shopTableReducer = (state = initialState, action: shopTableActionTy
                 ...state,
                 currentPage: action.page
             };
-        case  CHECK_EMPTY_SEARCH:
+        case  SET_PRICE_RANGE:
             return {
                 ...state,
-                isEmptyList: action.isEmpty
+                priceRange: action.values
             };
         default:
-            return state
+            return state;
     }
 };
 
@@ -78,7 +79,7 @@ type shopTableActionType =
     | UpdateProductActionType
     | setProductTotalCountType
     | setCurrentPageType
-    | setEmptyProductListType
+    | setPriceRangeValuesType
 
 
 type GetProductsActionType = {
@@ -127,42 +128,61 @@ export const getProducts = (page: number, pageCount: number) => async (dispatch:
     dispatch(setCurrentPage(page));
     let data = await apiShopTable.getProducts(page, pageCount);
     dispatch(getProductsSuccess(data.products));
-    dispatch(setProductTotalCount(data.productTotalCount))
+    dispatch(setProductTotalCount(data.productTotalCount));
 };
+
 export const findProducts = (product: string) => async (dispatch: Dispatch) => {
-    let data = await apiShopTable.getFilteredProducts(product);
-    if (!data.products) {
-        dispatch(setEmptyProductList(true))
-    }
-    dispatch(getProductsSuccess(data.products))
+    let products = await apiShopTable.getFilteredProducts(product);
+    // let filteredProductCost = products.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1] )
+    dispatch(getProductsSuccess(products));
+    return products;
 };
-export const setEmptyProductList = (isEmpty: boolean): setEmptyProductListType => ({type: CHECK_EMPTY_SEARCH, isEmpty})
-type setEmptyProductListType = {
-    type: typeof CHECK_EMPTY_SEARCH
-    isEmpty: boolean
+export const setPriceRangeValues = (values: number[]): setPriceRangeValuesType => {
+debugger;
+    return    {type: SET_PRICE_RANGE, values};
+};
+type setPriceRangeValuesType = {
+    type: typeof SET_PRICE_RANGE
+    values: number[]
 }
+
 
 export const addSortingProduct = (index: number) => async (dispatch: Dispatch) => {
     let sortProduct = await apiShopTable.sortProduct(index);
-    dispatch(getProductsSuccess(sortProduct))
+    dispatch(getProductsSuccess(sortProduct));
 };
 
 export const addProduct = (productName: string, price: number, productType: string) => async (dispatch: Dispatch) => {
     let newProduct = await apiShopTable.addProduct(productName, price, productType);
-    dispatch(addProductSuccess(newProduct))
+    dispatch(addProductSuccess(newProduct));
 };
 export const delProduct = (id: string) => async (dispatch: Dispatch) => {
     let response = await apiShopTable.delProduct(id);
     if (response.success) {
-        dispatch(deleteProductSuccess(id))
+        dispatch(deleteProductSuccess(id));
     }
 };
 export const updateProduct = (productName: string, price: number, id: string) => async (dispatch: Dispatch) => {
-    let response = await apiShopTable.updateProduct(productName, price, id)
+    let response = await apiShopTable.updateProduct(productName, price, id);
     if (response.success) {
-        dispatch(updateProductSuccess(productName, price, id))
+        dispatch(updateProductSuccess(productName, price, id));
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
