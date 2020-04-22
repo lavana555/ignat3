@@ -7,22 +7,20 @@ const FilePage = () => {
     const [file, setFile] = useState<File | null>(null);
     const [fileURL, setFileURL] = useState();
     const onButtonClick = (e: any) => {
-        if (inputEl && inputEl.current) {
-            inputEl.current.click()
-            setFile(e.currentTarget.files[0])
-        }
-
+        if (inputEl && inputEl.current) inputEl.current.click()
     };
+
     const onAddFile = (e: ChangeEvent<HTMLInputElement>) => {
         const newFile = e.target.files && e.target.files[0];
         if (newFile) {
             setFile(newFile);
             setFileURL(URL.createObjectURL(newFile))
         }
+        console.log(newFile)
     }
 
-
-    let audioTRef = useRef<HTMLAudioElement>(null);
+    let showElement = false;
+    let audioRef = useRef<HTMLAudioElement>(null);
     let inputRef = useRef<HTMLInputElement>(null);
     let [audio1, setAudio1] = useState<HTMLAudioElement | null>(null);
     const [audio1URL, setAudio1URL] = useState();
@@ -38,51 +36,69 @@ const FilePage = () => {
 
     const onPlayVid = () => {
         if (audio1URL) {
-            audioTRef && audioTRef.current && audioTRef.current.play();
+            audioRef && audioRef.current && audioRef.current.play();
             setPlayAudio(false)
         }
     }
     const onStopVid = () => {
-        audioTRef && audioTRef.current && audioTRef.current.pause();
+        audioRef && audioRef.current && audioRef.current.pause();
         setPlayAudio(true)
     }
 
     const plusVolVid = () => {
-        if (audio1URL && audioTRef.current && audioTRef.current.volume < 0.9) {
-            audioTRef.current.volume += 0.1
+        if (audio1URL && audioRef.current && audioRef.current.volume < 0.9) {
+            audioRef.current.volume += 0.1
         } else {
-            audioTRef && audioTRef.current && (audioTRef.current.volume = 1);
+            audioRef && audioRef.current && (audioRef.current.volume = 1);
+        }
+    }
+    const plusSpeed = () => {
+        if (audio1URL && audioRef.current && audioRef.current.playbackRate < 3) {
+            audioRef.current.playbackRate += 0.1
+        } else {
+            audioRef && audioRef.current && (audioRef.current.playbackRate = 3);
         }
     }
     const minusVolVid = () => {
-        console.log(audioTRef)
-        if (audio1URL && audioTRef.current && audioTRef.current.volume > 0.1) {
-            audioTRef.current.volume -= 0.1
+        if (audio1URL && audioRef.current && audioRef.current.volume > 0.1) {
+            audioRef.current.volume -= 0.1
         } else {
-            audioTRef && audioTRef.current && (audioTRef.current.volume = 0.1);
+            audioRef && audioRef.current && (audioRef.current.volume = 0.1);
+        }
+    }
+    const minusSpeed = () => {
+        if (audio1URL && audioRef.current && audioRef.current.playbackRate > 0.2) {
+            audioRef.current.playbackRate -= 0.1
+        } else {
+            audioRef && audioRef.current && (audioRef.current.playbackRate = 0.1);
         }
     }
 
-
+    let size = file && Math.floor(file.size / 1024);
     return (
-        <div>
-            <input type={'file'} accept={'image/*'} ref={inputEl} onChange={onAddFile}/>
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+            <input style={{display: "none"}} type={'file'} accept={'image/*'} ref={inputEl} onChange={onAddFile}/>
             <button onClick={onButtonClick}>Add</button>
-            <img src={fileURL}/>
-
-
+            {file && <div>{file.name}</div>}
+            {file && <div>{size}KB</div>}
+            <img style={{width: "200px"}} src={fileURL}/>
 
 
             <div className={s.wrapper}>
-                <input type={'file'} ref={inputRef} accept={'audio/*'} onChange={onAddVideo}/>
-                {playAudio && <div className={s.soundBtn} onClick={onPlayVid}>Play</div>}
-                {!playAudio && <div className={s.soundBtn} onClick={onStopVid}>Stop</div>}
-                <button onClick={plusVolVid}>[+]Vol</button>
-                <button onClick={minusVolVid}>[-]Vol</button>
-                <audio ref={audioTRef} controls={true} src={audio1URL}/>
+                <div className={s.wrapper}>
+                    <input type={'file'} ref={inputRef} accept={'audio/*'} onChange={onAddVideo}/>
+                    {playAudio && <div className={s.soundBtn} onClick={onPlayVid}>Play</div>}
+                    {!playAudio && <div className={s.soundBtn} onClick={onStopVid}>Stop</div>}
+                </div>
+                <div>
+                    <button onClick={plusVolVid}>[+]Vol</button>
+                    <button onClick={minusVolVid}>[-]Vol</button>
+                    <button onClick={plusSpeed}>[+]Speed</button>
+                    <button onClick={minusSpeed}>[-]Speed</button>
+                </div>
+                <audio ref={audioRef} controls={false} src={audio1URL}/>
             </div>
-        </div>
-    );
+        </div>);
 };
 
 export default FilePage;
