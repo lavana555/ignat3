@@ -27,6 +27,7 @@ import 'antd/dist/antd.css';
 import BuyMaColor from "./buyModalsAndSettingsCopy/buyMaColor";
 import PageProduct from "./buyModalsAndSettingsCopy/PageRroduct/PageProduct";
 import FilePage from './File/FilePage';
+import Video from "./Video/Video";
 
 
 const LANGUAGES = {
@@ -149,6 +150,7 @@ class App extends React.Component {
                                     </Link></li>
                                     <li><Link to="buyMas">buyMas</Link></li>
                                     <li><Link to="file">file</Link></li>
+                                    <li><Link to="video">video</Link></li>
                                 </ul>
 
                             </>
@@ -165,6 +167,7 @@ class App extends React.Component {
                             <Route exact path='/buyMas/' component={BuyMaS}/>
                             <Route exact path='/pageproduct/' component={PageProduct}/>
                             <Route exact path='/file/' component={FilePage}/>
+                            <Route exact path='/video' component={Video}/>
 
                         </div>
 
