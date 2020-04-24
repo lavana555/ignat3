@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useRef, useState} from 'react';
 import s from './FilePage.module.css'
+import Slider from "../Video/slider";
 
 
 const FilePage = () => {
@@ -25,6 +26,7 @@ const FilePage = () => {
     let [audio1, setAudio1] = useState<HTMLAudioElement | null>(null);
     const [audio1URL, setAudio1URL] = useState();
     const [playAudio, setPlayAudio] = useState(true)
+    const [volume, setVolume] = useState(1)
     const onAddVideo = (e: ChangeEvent<HTMLInputElement>) => {
         const newFile = e.target.files && e.target.files[0];
         if (newFile) {
@@ -34,22 +36,22 @@ const FilePage = () => {
         }
     }
 
-    const onPlayVid = () => {
+    const onPlayAudio = () => {
         if (audio1URL) {
             audioRef && audioRef.current && audioRef.current.play();
             setPlayAudio(false)
         }
     }
-    const onStopVid = () => {
+    const onStopAudio = () => {
         audioRef && audioRef.current && audioRef.current.pause();
         setPlayAudio(true)
     }
 
-    const plusVolVid = () => {
+    const plusVol = () => {
         if (audio1URL && audioRef.current && audioRef.current.volume < 0.9) {
-            audioRef.current.volume += 0.1
+            setVolume(audioRef.current.volume += 0.1)
         } else {
-            audioRef && audioRef.current && (audioRef.current.volume = 1);
+            audioRef && audioRef.current && setVolume(audioRef.current.volume = 1);
         }
     }
     const plusSpeed = () => {
@@ -59,11 +61,11 @@ const FilePage = () => {
             audioRef && audioRef.current && (audioRef.current.playbackRate = 3);
         }
     }
-    const minusVolVid = () => {
-        if (audio1URL && audioRef.current && audioRef.current.volume > 0.1) {
-            audioRef.current.volume -= 0.1
+    const minusVol = () => {
+        if (audio1URL && audioRef.current && audioRef.current.volume > 0) {
+            setVolume(audioRef.current.volume -= 0.1)
         } else {
-            audioRef && audioRef.current && (audioRef.current.volume = 0.1);
+            audioRef && audioRef.current && setVolume(audioRef.current.volume = 0);
         }
     }
     const minusSpeed = () => {
@@ -72,6 +74,9 @@ const FilePage = () => {
         } else {
             audioRef && audioRef.current && (audioRef.current.playbackRate = 0.1);
         }
+    }
+    const ChangedVolume = (value:number) => {
+        if (audioRef && audioRef.current) setVolume(audioRef.current.volume = value)
     }
 
     let size = file && Math.floor(file.size / 1024);
@@ -87,15 +92,16 @@ const FilePage = () => {
             <div className={s.wrapper}>
                 <div className={s.wrapper}>
                     <input type={'file'} ref={inputRef} accept={'audio/*'} onChange={onAddVideo}/>
-                    {playAudio && <div className={s.soundBtn} onClick={onPlayVid}>Play</div>}
-                    {!playAudio && <div className={s.soundBtn} onClick={onStopVid}>Stop</div>}
+                    {playAudio && <div className={s.soundBtn} onClick={onPlayAudio}>Play</div>}
+                    {!playAudio && <div className={s.soundBtn} onClick={onStopAudio}>Stop</div>}
                 </div>
                 <div>
-                    <button onClick={plusVolVid}>[+]Vol</button>
-                    <button onClick={minusVolVid}>[-]Vol</button>
+                    <button onClick={plusVol}>[+]Vol</button>
+                    <button onClick={minusVol}>[-]Vol</button>
                     <button onClick={plusSpeed}>[+]Speed</button>
                     <button onClick={minusSpeed}>[-]Speed</button>
                 </div>
+                <Slider volume={volume} ChangedVolume={ChangedVolume}/>
                 <audio ref={audioRef} controls={false} src={audio1URL}/>
             </div>
         </div>);
